@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE fragenkatalog SYSTEM "fragen.dtd">
+<fragenkatalog name="one">
+	<anzahl_fragen>1</anzahl_fragen>
+	<frage ID="1">
+		<timeout>25</timeout>
+		<richtige_antwort>1</richtige_antwort>
+		<fragestellung>Welcher Mechanismus kann unter Unix zur Kommunikation via Netzwerk verwendet werden?</fragestellung>
+		<antwort ID="1">Sockets</antwort>
+		<antwort ID="2">Message Queues</antwort>
+		<antwort ID="3">Pipes</antwort>
+		<antwort ID="4">Semaphore</antwort>
+	</frage>
+</fragenkatalog>

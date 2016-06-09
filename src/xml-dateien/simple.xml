@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE fragenkatalog SYSTEM "fragen.dtd">
+	<fragenkatalog name="simple">
+		<anzahl_fragen>6</anzahl_fragen>
+		<frage ID="1">
+			<timeout>10</timeout>
+			<richtige_antwort>1</richtige_antwort>
+			<fragestellung>Welcher Mechanismus kann unter Unix zur Kommunikation über das Netzwerk verwendet werden?</fragestellung>
+			<antwort ID="1">Sockets</antwort>
+			<antwort ID="2">Message Queues</antwort>
+			<antwort ID="3">Pipes</antwort>
+			<antwort ID="4">Semaphore</antwort>
+		</frage>
+		<frage ID="2">
+			<timeout>10</timeout>
+			<richtige_antwort>1</richtige_antwort>
+			<fragestellung>Die Hauptstadt von Italien ist:</fragestellung>
+			<antwort ID="1">Rom</antwort>
+			<antwort ID="2">Athen</antwort>
+			<antwort ID="3">Bonn</antwort>
+			<antwort ID="4">Madrid</antwort>
+		</frage>
+		<frage ID ="3">
+			<timeout>10</timeout>
+			<richtige_antwort>1</richtige_antwort>
+			<fragestellung>Die Quadratwurzel von 100 ist:</fragestellung>
+			<antwort ID="1">10</antwort>
+			<antwort ID="2">2,76</antwort>
+			<antwort ID="3">5</antwort>
+			<antwort ID="4">1</antwort>
+		</frage>
+		<frage ID="4">
+			<timeout>10</timeout>
+			<richtige_antwort>1</richtige_antwort>
+			<fragestellung>1 + 1 = ?</fragestellung>
+			<antwort ID="1">2</antwort>
+			<antwort ID="2">1</antwort>
+			<antwort ID="3">3</antwort>
+			<antwort ID="4">4</antwort>
+		</frage>
+		<frage ID="5">
+			<timeout>10</timeout>
+			<richtige_antwort>1</richtige_antwort>
+			<fragestellung>Spinnen ...</fragestellung>
+			<antwort ID="1">... haben 8 Beine</antwort>
+			<antwort ID="2">... sind Insekten</antwort>
+			<antwort ID="3">... sind Vögel</antwort>
+			<antwort ID="4">... werden 100 Jahre alt</antwort>
+		</frage>
+		<frage ID="6">
+			<timeout>10</timeout>
+			<richtige_antwort>1</richtige_antwort>
+			<fragestellung>Die Hauptstadt von Spanien ist:</fragestellung>
+			<antwort ID="1">Madrid</antwort>
+			<antwort ID="2">Barcelona</antwort>
+			<antwort ID="3">Rom</antwort>
+			<antwort ID="4">London</antwort>
+		</frage>
+	</fragenkatalog>
+

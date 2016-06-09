@@ -1,0 +1,107 @@
+﻿body {
+    font-family:Calibri;
+    font-weight:bold;
+    background-color: dodgerblue;
+}
+#head{
+    width:100%;
+ height:200px;
+}
+#menubar{
+    width:48%;
+    height: 200px;
+    background:white;
+    display:inline-block;
+    position:absolute;
+}
+
+.menupoint{ 
+    height:50px;
+    width:50px;
+    border-radius:50%;
+    display:inline-block;
+    background-color: dodgerblue;
+    margin-top:5px;
+    margin-left:5px;
+}
+.menu{
+ width: 100%;
+ display:none;
+}
+
+.activemenu{
+    display: inline-block;
+}
+
+#punkte{
+    left:51.5%;
+    position:absolute;
+    width:48%;
+    height:200px;
+    display:inline-block;
+    border:solid 2px white;
+}
+#anzeige{
+    background:dodgerblue;
+    color:white;
+    width:100%;
+    height:10%;
+    
+}
+.spieler{
+    background:dodgerblue;
+    color:white;
+    width:100%;
+    height:10%;
+}
+.name{
+    display:inline-block;
+    width:45%;
+    height:100%;
+}
+.punkte{
+    text-align:right;
+    display:inline-block;
+     width:45%;
+    height:100%;
+}
+
+/*Quizz an sich*/
+#quiz{  
+    position: relative;
+    margin-left: 10%;
+    width: 80%;
+    height: 800px;
+    background-color: lightgrey;
+   margin-top: 1%;
+}
+
+#Frage{
+    position:relative;
+    top: 5% ;
+    margin-left: 10%;
+    width: 80%;
+    display: none;
+    height: 25%;
+    background-color: dodgerblue;
+    color: white;
+}
+.Antwort{
+    position: relative;
+    margin-left: 10%;
+    width: 35%;
+    display: none;
+    margin-top: 5%;
+    height: 25%;
+    background-color: dodgerblue;
+    color: white;
+}
+
+.button{
+    background-color:white;
+    color:dodgerblue;
+    font-weight:bold;
+}
+#starten{
+    display:none;
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT fragenkatalog (anzahl_fragen, frage+)>
+<!ATTLIST fragenkatalog name CDATA #REQUIRED>
+<!ELEMENT anzahl_fragen (#PCDATA)>
+<!ELEMENT frage (timeout,richtige_antwort,fragestellung,antwort+)>
+<!ATTLIST frage ID CDATA #REQUIRED>
+<!ELEMENT timeout (#PCDATA)>
+<!ELEMENT richtige_antwort (#PCDATA)>
+<!ELEMENT fragestellung (#PCDATA)>
+<!ELEMENT antwort (#PCDATA)>
+<!ATTLIST antwort ID CDATA #REQUIRED>

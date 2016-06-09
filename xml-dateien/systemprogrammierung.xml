@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE fragenkatalog SYSTEM "fragen.dtd">
+	<fragenkatalog name="systemprogrammierung">
+		<anzahl_fragen>12</anzahl_fragen>
+		<frage ID="1">
+			<timeout>30</timeout>
+			<richtige_antwort>1</richtige_antwort>
+			<fragestellung>Ein Thread soll auf ein durch einen anderen Thread ausgel�stes Ereignis warten. Welcher Mechanismus ist geeignet?</fragestellung>
+			<antwort ID="1">nur Semaphore</antwort>
+			<antwort ID="2">nur Mutex</antwort>
+			<antwort ID="3">weder Semaphore noch Mutexe</antwort>
+			<antwort ID="4">sowohl Semaphore als auch Mutexe</antwort>
+		</frage>
+		<frage ID="2">
+			<timeout>20</timeout>
+			<richtige_antwort>1</richtige_antwort>
+			<fragestellung>Der Systemaufruf fork...</fragestellung>
+			<antwort ID="1">...erzeugt einen neuen Prozess, der das gleiche Programm ausf�hrt.</antwort>
+			<antwort ID="2">...erzeugt einen neuen Prozess, der ein anderes Programm ausf�hrt.</antwort>
+			<antwort ID="3">...erzeugt einen neuen Thread.</antwort>
+			<antwort ID="4">...ist das logische Gegenst�ck zum Aufruf knife.</antwort>
+		</frage>
+		<frage ID="3">
+			<timeout>30</timeout>
+			<richtige_antwort>1</richtige_antwort>
+			<fragestellung>In einem Signalhandler...</fragestellung>
+			<antwort ID="1">...d�rfen nur bestimmte Funktionen aufgerufen werden.</antwort>
+			<antwort ID="2">...kann man problemlos alles machen, was man auch im regul�ren Programmcode macht.</antwort>
+			<antwort ID="3">...d�rfen keine Flie�kommaoperationen durchgef�hrt werden.</antwort>
+			<antwort ID="4">...ist nur der Systemaufruf write verboten.</antwort>
+		</frage>
+		<frage ID="4">
+			<timeout>30</timeout>
+			<richtige_antwort>1</richtige_antwort>
+			<fragestellung>Sie m�chten eine Datenstruktur vor gleichzeitigem Zugriff aus mehreren Threads sch�tzen. Welcher Mechanismus ist daf�r geeignet?</fragestellung>
+			<antwort ID="1">Sowohl Semaphore als auch Mutexe.</antwort>
+			<antwort ID="2">Mutexe</antwort>
+			<antwort ID="3">Semaphore</antwort>
+			<antwort ID="4">Verschl�sselung</antwort>
+		</frage>
+		<frage ID="5">
+			<timeout>30</timeout>
+			<richtige_antwort>1</richtige_antwort>
+			<fragestellung>Es soll darauf gewartet werden, dass Daten eintreffen, allerdings nur eine bestimmte Zeit. Wie kann man das umsetzen?</fragestellung>
+			<antwort ID="1">mit dem Systemaufruf select</antwort>
+			<antwort ID="2">durch einen zus�tzlichen Timeout-Parameter bei read oder recv</antwort>
+			<antwort ID="3">gar nicht</antwort>
+			<antwort ID="4">durch Setzen des Timeout-Status mit fcntl</antwort>
+		</frage>
+		<frage ID="6">
+			<timeout>30</timeout>
+			<richtige_antwort>1</richtige_antwort>
+			<fragestellung>Mit welchem Systemaufruf kann man den Port festlegen, auf dem ein Serverprogramm auf Verbindungen wartet?</fragestellung>
+			<antwort ID="1">bind</antwort>
+			<antwort ID="2">accept</antwort>
+			<antwort ID="3">setsock</antwort>
+			<antwort ID="4">open</antwort>
+		</frage>
+		<frage ID="7">
+			<timeout>45</timeout>
+			<richtige_antwort>1</richtige_antwort>
+			<fragestellung>W�hrend eines read-Aufrufs tritt ein Signal auf und wird durch einen Signalhandler abgearbeitet (SA_RESTART nicht gesetzt). Was passiert?</fragestellung>
+			<antwort ID="1">Der Aufruf kehrt unter Umst�nden mit weniger Daten als angefordert oder EINTR zur�ck.</antwort>
+			<antwort ID="2">Es werden auf jeden Fall so viele Daten gelesen wie angefordert.</antwort>
+			<antwort ID="3">Die Daten gehen verloren.</antwort>
+			<antwort ID="4">Das Programm wird in solchen F�llen vom Betriebssystem abgebrochen.</antwort>
+		</frage>
+		<frage ID="8">
+			<timeout>20</timeout>
+			<richtige_antwort>1</richtige_antwort>
+			<fragestellung>Beim Lesen aus einer Pipe meldet der Aufruf read das Dateiende, wenn...</fragestellung>
+			<antwort ID="1">...alle Schreib-Deskriptoren f�r die Pipe geschlossen und alle Daten aus der Pipe gelesen wurden.</antwort>
+			<antwort ID="2">...der Leser ein spezielles Signal erh�lt.</antwort>
+			<antwort ID="3">...der schreibende Prozess fork aufruft.</antwort>
+			<antwort ID="4">...^D in die Pipe geschrieben wird.</antwort>
+		</frage>
+		<frage ID="9">
+			<timeout>30</timeout>
+			<richtige_antwort>1</richtige_antwort>
+			<fragestellung>Was passiert mit einem Shared-Memory-Objekt, wenn es nicht manuell gel�scht wird?</fragestellung>
+			<antwort ID="1">Es bleibt weiterhin bestehen, bis es von Hand oder durch einen Reboot gel�scht wurde.</antwort>
+			<antwort ID="2">Es wird zerst�rt, wenn sich der Prozess beendet, der es erzeugt hat.</antwort>
+			<antwort ID="3">Es wird zerst�rt, wenn kein Prozess mehr auf es zugreift.</antwort>
+			<antwort ID="4">Der Garbage-Collector des Betriebssystems zerst�rt es, wenn der Speicher knapp wird.</antwort>
+		</frage>
+		<frage ID="10">
+			<timeout>30</timeout>
+			<richtige_antwort>1</richtige_antwort>
+			<fragestellung>Welches dieser Signale kann nicht abgefangen werden?</fragestellung>
+			<antwort ID="1">SIGKILL</antwort>
+			<antwort ID="2">SIGTERM</antwort>
+			<antwort ID="3">SIGINT</antwort>
+			<antwort ID="4">SIGPIPE</antwort>
+		</frage>
+		<frage ID="11">
+			<timeout>30</timeout>
+			<richtige_antwort>1</richtige_antwort>
+			<fragestellung>Was ist ein Zombie-Prozess unter Unix?</fragestellung>
+			<antwort ID="1">Ein Prozess, dessen Exit-Status noch nicht mittels wait abgefragt wurde.</antwort>
+			<antwort ID="2">Ein Daemon-Prozess, der durch den Aufruf zombie immun gegen das KILL-Signal gemacht wurde.</antwort>
+			<antwort ID="3">Ein Prozess, der nur nachts gestartet werden kann.</antwort>
+			<antwort ID="4">Ein Computervirus.</antwort>
+		</frage>
+		<frage ID="12">
+			<timeout>30</timeout>
+			<richtige_antwort>1</richtige_antwort>
+			<fragestellung>Welches Signal (sofern nicht ignoriert) empf�ngt ein Elternprozess, wenn sich einer seiner Kindprozesse beendet?</fragestellung>
+			<antwort ID="1">SIGCHLD</antwort>
+			<antwort ID="2">SIGSYS</antwort>
+			<antwort ID="3">SIGSEGV</antwort>
+			<antwort ID="4">SIGABRT</antwort>
+		</frage>	
+	</fragenkatalog>
+
