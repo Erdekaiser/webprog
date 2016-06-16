@@ -1,20 +1,21 @@
 //Listener f. Dokument registrieren
- document.addEventListener('DOMContentLoaded', init, false);
+document.addEventListener('DOMContentLoaded', init);
 
 var socket;
 var bereitZumSenden=false;
 
 function init()
 {
-	var anmelden = window.document.getElementById("anmelden");
-	anmelden.addEventListener("click",anmelden,false);
+	alert("loaded");
+	var anmelden = document.getElementById("anmelden");
+	anmelden.addEventListener("click",anmeldenf,false);
 	
-	var start = window.document.getElementyById("starten");
-	start.addEventListener("click",start,false);
+	var start = document.getElementById("starten");
+	start.addEventListener("click",startf,false);
 	
-	var url = "ws://localhost:8085/Quiz/Echo";
-	alert("url ="+url);
+	var url = "ws://localhost:8085/Quiz/Socket";
 	
+	alert("url: "+url);
 	socket=new WebSocket(url);
 	
 	socket.onopen=rdytosend;
@@ -24,7 +25,7 @@ function init()
 }
 
 //Listener für Button anmelden
-function anmelden(event){
+function anmeldenf(event){
 	var button = event.target;
 	var name = windows.document.getElementById("name").value;
 	if (bereitZumSenden == true){
@@ -38,5 +39,5 @@ function error(event){alert("Fehler bei den  Websockets "+event.data);}
 
 function recv(){}
 
-function start(event){}
+function startf(event){}
 

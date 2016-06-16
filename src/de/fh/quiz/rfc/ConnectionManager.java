@@ -1,5 +1,8 @@
 package de.fh.quiz.rfc;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.websocket.Session;
 
@@ -7,7 +10,8 @@ import javax.websocket.Session;
 public class ConnectionManager 
 {   // Liste für Web-Socket-Sessions
 	public static final ArrayList<Session> socketliste = new ArrayList<Session>();  				// Vorsicht unsynchronisiert!!;
-
+	//public static final Set<Session> socketliste = Collections.synchronizedSet(new HashSet<Session>());
+	
 	// Synchronisierte Zugriffe auf die Liste
 	public  static synchronized String outputAllSessions(){ return socketliste.toString(); }  
 	// Verbindung an der Position i holen

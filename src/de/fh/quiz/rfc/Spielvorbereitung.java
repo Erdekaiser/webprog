@@ -22,48 +22,43 @@ import de.fhwgt.quiz.loader.LoaderException;
 public class Spielvorbereitung {
 
 	private Quiz quiz = Quiz.getInstance();
-	private FilesystemLoader loader;
-	private Map<String, Catalog> Kataloge;
-	private ArrayList<String> katalognamensliste;
 	
-	Spielvorbereitung(){
-		quiz.initCatalogLoader(loader);
-		try {
-			Kataloge = quiz.getCatalogList();
-		} catch (LoaderException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		katalognamensliste = new ArrayList<String>();
-		for(String key : Kataloge.keySet()) {
-			katalognamensliste.add(key);
-		}
-	}
+	
+//	private FilesystemLoader loader;
+//	private Map<String, Catalog> Kataloge;
+//	private ArrayList<String> katalognamensliste;
+//	
+//	Spielvorbereitung(){
+//		quiz.initCatalogLoader(loader);
+//		try {
+//			Kataloge = quiz.getCatalogList();
+//		} catch (LoaderException e) {
+//			e.printStackTrace();
+//		}
+//		katalognamensliste = new ArrayList<String>();
+//		for(String key : Kataloge.keySet()) {
+//			katalognamensliste.add(key);
+//		}
+//	}
 		
-	//In sessions werden alle Sessions gehalten welche von Clients geöffnet werden
-	private static Set<Session> sessions = Collections.synchronizedSet(new HashSet<Session>());
 		
 	//Wird aufgerufen sobald ein Client auf den Socket zugreift
 	//Wir erhalten die Session vom Client und speichern sie in unserem sessions set
 	@OnOpen
 	public void opened(Session session){
-		sessions.add(session);
+		ConnectionManager.socketliste.add(session);
 	}
 	
 	//Wird aufgerufen sobald ein CLient nicht mehr auf den Socket zugreift
 	//Wir erhalten die Session vom Client und löschen sie aus unserem sessions set
 	@OnClose
 	public void closed(Session session){
-		sessions.remove(session);
+		ConnectionManager.socketliste.remove(session);
 	}
 	
 	//Wird aufgerufen sobald unser Server eine Nachricht erhält
 	@OnMessage
-	public void kataloge(Session session, String message){
-		
-		for(Session client : sessions){
-			//Nachricht wird asyncron versendet
-			client.getAsyncRemote().sendText(message);
-		}
+	public void broadcast(String message){
+		new Broadcast(message);
 	}
 }

@@ -13,7 +13,7 @@
 	var go= window.document.getElementById("go");   
 	go.addEventListener("click",send,false); 
 
-	var url = "ws://localhost:8085/Quiz/Socket";
+	var url = "ws://localhost:8080/Quiz/Socket";
 	alert("url= "+url);
 	
 	socket=new WebSocket(url);
