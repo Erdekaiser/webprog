@@ -1,51 +1,23 @@
 package de.fh.quiz.rfc;
-
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
-import javax.websocket.OnClose;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
 import javax.websocket.Session;
-import javax.websocket.server.ServerEndpoint;
 
-import de.fhwgt.quiz.application.*;
+// Verwaltet eine threadsichere Liste von Socket-Verbindungen
+public class ConnectionManager 
+{   // Liste fÃ¼r Web-Socket-Sessions
+	public static final ArrayList<Session> socketliste = new ArrayList<Session>();  				// Vorsicht unsynchronisiert!!;
 
+	// Synchronisierte Zugriffe auf die Liste
+	public  static synchronized String outputAllSessions(){ return socketliste.toString(); }  
+	// Verbindung an der Position i holen
+    public  static synchronized Session getSession(int i) { return socketliste.get(i);}
+    // Anzahl der Verbindungen besorgen
+    public  static synchronized int SessionCount() { return socketliste.size();}
+    // Verbindung hinzufÃ¼gen
+    public  static synchronized void addSession(Session session) 
+    { socketliste.add(session);    }
+    // Verbindung entfernen
+    public  static synchronized void SessionRemove(Session session) { socketliste.remove(session);}
 
-//Endpoint definieren, so kann vom Client der Socket angesprochen werden
-@ServerEndpoint("/QuizWebSocket") 
-public class ConnectionManager {
-
-	Quiz quiz = Quiz.getInstance();
-		
-	//In sessions werden alle Sessions gehalten welche von Clients geöffnet werden
-	private static Set<Session> sessions = Collections.synchronizedSet(new HashSet<Session>());
-		
-	//Wird aufgerufen sobald ein Client auf den Socket zugreift
-	//Wir erhalten die Session vom Client und speichern sie in unserem sessions set
-	@OnOpen
-	public void opened(Session session){
-		sessions.add(session);
-	}
-	
-	//Wird aufgerufen sobald ein CLient nicht mehr auf den Socket zugreift
-	//Wir erhalten die Session vom Client und löschen sie aus unserem sessions set
-	@OnClose
-	public void closed(Session session){
-		sessions.remove(session);
-	}
-	
-	//Wird aufgerufen sobald unser Server eine Nachricht erhält
-	@OnMessage
-	public void kataloge(Session session, String message){
-		for(Session client : sessions){
-			//Nachricht wird asyncron versendet
-			client.getAsyncRemote().sendText(message);
-		}
-	}
-	
-	
 }

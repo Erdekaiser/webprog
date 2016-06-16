@@ -12,7 +12,7 @@ function init()
 	var start = window.document.getElementyById("starten");
 	start.addEventListener("click",start,false);
 	
-	var url = "ws://localhost:8085/Quiz/QuizWebSocket";
+	var url = "ws://localhost:8085/Quiz/Echo";
 	alert("url ="+url);
 	
 	socket=new WebSocket(url);
