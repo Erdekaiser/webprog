@@ -7,6 +7,8 @@ var bereitZumSenden=false;
 function init()
 {
 	alert("loaded");
+	katalogeLaden();	
+	
 	var anmelden = document.getElementById("anmelden");
 	anmelden.addEventListener("click",anmeldenf,false);
 	
@@ -22,6 +24,8 @@ function init()
 	socket.onclose=close;
 	socket.onerror=error;
 	socket.onmessage=recv;
+	
+	
 }
 
 //Listener für Button anmelden
@@ -40,4 +44,6 @@ function error(event){alert("Fehler bei den  Websockets "+event.data);}
 function recv(){}
 
 function startf(event){}
+
+
 

@@ -57,8 +57,10 @@ public class Spielvorbereitung {
 	}
 	
 	//Wird aufgerufen sobald unser Server eine Nachricht erhält
-	@OnMessage
+	@OnMessage	
 	public void broadcast(String message){
 		new Broadcast(message);
 	}
+	
+	
 }

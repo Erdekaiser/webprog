@@ -9,6 +9,7 @@ import javax.websocket.Session;
 // Verwaltet eine threadsichere Liste von Socket-Verbindungen
 public class ConnectionManager 
 {   // Liste f√ºr Web-Socket-Sessions
+	//zu HashMap ‰ndern, um Player Objekt zu Session zuzuordnen
 	public static final ArrayList<Session> socketliste = new ArrayList<Session>();  				// Vorsicht unsynchronisiert!!;
 	//public static final Set<Session> socketliste = Collections.synchronizedSet(new HashSet<Session>());
 	
