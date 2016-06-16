@@ -23,7 +23,7 @@ public class Spiel {
 		public Spiel(){
 			Spielerliste = new ArrayList<Player>();
 			Kataloge = new HashMap<String, Catalog>();
-			loader = new FilesystemLoader(XmlVerzeichnis);
+			loader = new FilesystemLoader();
 		}
 		
 		

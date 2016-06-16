@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link type="text/css" rel="stylesheet" href="StyleSheet.css" />
+    <script type="text/javascript" src="spielvorbereitung.js"></script>
+    <title>Quiz</title>
+</head>
+<body>
+    <div id="head">
+        <div id="menubar">
+            <div class="menupoint" onclick="selected(0);"></div>
+            <div class="menupoint" onclick="selected(1);"></div>
+            <div class="menupoint" onclick="selected(2);"></div>
+        </div>
+        <div id="punkte">
+            <div id="anzeige">
+                Scoreboard
+            </div>
+            <div id="User"></div>
+            <input type="button" value="Anmelden" id="anmelden" class="button" />
+            <input type="text" id="name">
+            <input type="button" value="Start" id="starten" class="button hidden"/>
+        </div>
+    </div>
+    <div id="quiz">
+        <div class =" hidden" id="Frage">Frage:</div> 
+        <div class="Antwort hidden">A</div> 
+        <div class="Antwort hidden">B</div> 
+        <div class="Antwort hidden">C</div> 
+        <div class="Antwort hidden">D</div>
+    </div>
+</body>
+</html>

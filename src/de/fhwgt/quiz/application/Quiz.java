@@ -23,7 +23,7 @@ public class Quiz {
     private static final Quiz quiz = new Quiz();
     private static final Game game = new Game();
 
-    private CatalogLoader loader;
+    private static CatalogLoader loader;
 
     private Quiz() {}
 

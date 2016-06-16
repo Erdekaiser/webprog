@@ -22,11 +22,11 @@ public class FilesystemLoader implements CatalogLoader {
 
     private File[] catalogDir;
     private final Map<String, Catalog> catalogs;
-    private final String location;
+    private final String location; 
 
-    public FilesystemLoader(String location) {
+    public FilesystemLoader() {
     	catalogs = new HashMap<String, Catalog>();
-        this.location = location;
+        this.location = "/xml-dateien";
     }
 
     @Override
