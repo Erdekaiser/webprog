@@ -1,10 +1,10 @@
-package de.fh.quiz.rfc;
+
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,36 +16,35 @@ import de.fhwgt.quiz.application.*;
 import de.fhwgt.quiz.loader.FilesystemLoader;
 import de.fhwgt.quiz.loader.LoaderException;
 
-import org.json.*;
 
-@WebServlet("/Katalog")
-public class Katalog extends HttpServlet{
+
+//@WebServlet("/Kataloge")
+public class KatalogServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
-	
-	private Quiz quiz;
-	private FilesystemLoader loader;
-	private Map<String, Catalog> Kataloge;
-	private ArrayList<String> katalognamensliste;
+
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		quiz = quiz.getInstance();
-		//loader objekt null, muss initalisiert werden
-		quiz.initCatalogLoader(loader);
+		PrintWriter writer = response.getWriter();
+		//FilesystemLoader loader = new FilesystemLoader();
+		//Quiz.getInstance().initCatalogLoader(loader);
+		
+		response.setContentType("text/plain");
+		
+		ArrayList<String> katalognamen = new ArrayList<String>();
+		
+		Iterator<Entry<String, Catalog>> iterator;
 		try {
-			Kataloge = quiz.getCatalogList();
+			iterator = Quiz.getInstance().getCatalogList().entrySet().iterator();
+			
+			while(iterator.hasNext()){
+				katalognamen.add(iterator.next().getKey());
+			}
 		} catch (LoaderException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		katalognamensliste = new ArrayList<String>();
-		for(String key : Kataloge.keySet()) {
-			katalognamensliste.add(key);
-		}
-		JSONArray jsonArray = new JSONArray(katalognamensliste);
-		//ist nix!!
-		String xml = XML.toString(jsonArray);
 		
-		PrintWriter writer = response.getWriter();
-		writer.print(xml);
+		writer.write(katalognamen.toString().replaceAll("[\\[\\]]*", ""));
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{

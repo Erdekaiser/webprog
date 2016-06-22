@@ -3,18 +3,20 @@
 <head>
     <title>Quiz</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <script type="text/javascript" src="spielvorbereitung.js"></script>
-    <script type="text/javascript" src="katalog.js"></script>
+	<script type="text/javascript"> 
+		var readyToSend = false;
+	</script>
+    <script type="text/javascript" src="init.js"></script>
+    <script type="text/javascript" src="initKataloge.js"></script>
+    <script type="text/javascript" src="initListener.js"></script>
+    <script type="text/javascript" src="initSocket.js"></script>
+    <script type="text/javascript" src="rfc.js"></script>
     <link type="text/css" rel="stylesheet" href="StyleSheet.css" />
 </head>
 <body>
     <div id="head">
         <div id="menubar">
-           <!-- <div class="menupoint" onclick="selected(0);"></div>
-            <div class="menupoint" onclick="selected(1);"></div>
-            <div class="menupoint" onclick="selected(2);"></div>-->
-            
-            
+        <h1>Kataloge</h1>            
         </div>
         <div id="punkte">
             <div id="anzeige">
