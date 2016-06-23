@@ -10,7 +10,7 @@ function initKataloge(){
             var katalogname = " ";
 
             for (var i = 0; i < katalogliste.length; i++) {
-                katalogname = katalogname + '<div id="katalog">' + katalogliste[i] + '</div>';
+                katalogname = katalogname + '<div id="'+katalogliste[i]+'">' + katalogliste[i] + '</div>';
             }
 
             document.getElementById("menubar").innerHTML = katalogname;

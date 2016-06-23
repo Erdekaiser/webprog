@@ -1,3 +1,4 @@
+var ready = false;
 function anmeldenclick(event){
 	var name = window.document.getElementById("name").value;
 	
@@ -13,6 +14,9 @@ function anmeldenclick(event){
 	document.getElementById("anzeige").innerHTML = "Warte auf weitere Spieler ...";
 	document.getElementById("anmelden").style.visibility = "hidden";
 	document.getElementById("name").style.visibility = "hidden";
+	if (ready){
+		document.getElementById("starten").setAttribute("style", "display: block");
+	}
 }
 
 function recv(){
@@ -22,25 +26,24 @@ function recv(){
 function close(){}
 function error(){}
 
-//noch als Tabelle realisieren, sonst überschreibt sich immer der aktuelle User.
-//div anzeige muss noch geupdated werden sowie das spiel startet.
 function spielerlistelistener(event){
 	var playerlist = JSON.parse(event.data);
 	var playerDiv = document.getElementById("User");
-	
-	clearPlayerlist();
+	var spieler;
 	
 	if (playerlist.toString() == ""){
 		return;
 	}
-
-	for(var i=0; i<playerlist.toString().split(",").length; i++){
-		playerDiv.innerHTML = playerlist[i].name;
-	}
-}
-
-function clearPlayerlist(){
-	var playerDiv = document.getElementById("User");
 	
-	playerDiv.innerHTML = "";
+    document.getElementById("User").innerHTML = "";
+    for (var i = 0; i <playerlist.toString().split(",").length; i++) {
+        spieler = document.createElement("div");
+        spieler.className = "spieler"
+        spieler.innerHTML = "   <div class=\"name\">" + playerlist[i].name + "</div><div class=\"punkte\">"+playerlist[i].score+"</div>"
+        document.getElementById("User").appendChild(spieler)
+        spieler=null;
+
+    }
+    ready = playerlist.toString().split(",").length>=2;
+    
 }

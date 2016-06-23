@@ -27,15 +27,12 @@ public class SpielerlisteServlet  extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/event-stream");
 		sendPlayerlist(response);
-
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-
-	@SuppressWarnings("unchecked")
 	private void sendPlayerlist(HttpServletResponse response) throws IOException {
 		PrintWriter writer = response.getWriter();
 
@@ -48,8 +45,8 @@ public class SpielerlisteServlet  extends HttpServlet {
 				Player player = iterator.next();
 				JSONObject pJSONObject = new JSONObject();
 
-				pJSONObject.put("name", 	player.getName());
-				pJSONObject.put("score", 	player.getScore());
+				pJSONObject.put("name", player.getName());
+				pJSONObject.put("score", player.getScore());
 				plJSONArray.add(pJSONObject);
 			}
 
