@@ -18,6 +18,7 @@
 			<attribute name="owner.project.facets" value="jst.web"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Fabian/workspace/json-lib-2.4-jdk15.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Fabian/workspace/json-simple-1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Fabian/workspace/java-json.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

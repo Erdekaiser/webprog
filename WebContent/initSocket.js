@@ -1,5 +1,4 @@
 //Listener f. Dokument registrieren
-var socket;
 
 function initWebSocket()
 {

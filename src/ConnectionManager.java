@@ -9,17 +9,9 @@ import javax.websocket.Session;
 // Verwaltet eine threadsichere Liste von Socket-Verbindungen
 public class ConnectionManager 
 {   
-	//public static final ConcurrentHashMap<Session, Spieler> socketliste = new ConcurrentHashMap<Session, Spieler>();
-	
-	
-	
-	
-	
-	// Liste fÃ¼r Web-Socket-Sessions
-	//zu HashMap ändern, um Player Objekt zu Session zuzuordnen
-					// Vorsicht unsynchronisiert!!;
-	public static final Set<Session> socketliste = Collections.synchronizedSet(new HashSet<Session>());
-	
+	public static final ConcurrentHashMap<Session, Spieler> socketliste = new ConcurrentHashMap<Session, Spieler>();
+	// Liste für Web-Socket-Sessions
+	//public static final Set<Session> socketliste = Collections.synchronizedSet(new HashSet<Session>());
 	// Synchronisierte Zugriffe auf die Liste
 	//public  static synchronized String outputAllSessions(){ return socketliste.toString(); }  
 	// Verbindung an der Position i holen
@@ -31,5 +23,4 @@ public class ConnectionManager
     //{ socketliste.add(session);    }
     // Verbindung entfernen
     //public  static synchronized void SessionRemove(Session session) { socketliste.remove(session);}
-
 }

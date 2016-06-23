@@ -7,6 +7,15 @@
     <servlet-name>KatalogServlet</servlet-name>
     <url-pattern>/KatalogServlet</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>SpielerlisteServlet</servlet-name>
+    <servlet-class>SpielerlisteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SpielerlisteServlet</servlet-name>
+    <url-pattern>/SpielerlisteServlet</url-pattern>
+  </servlet-mapping>
   
 <listener>
 	<listener-class>ContextListener</listener-class>
