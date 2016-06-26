@@ -1,21 +1,37 @@
-var ready = false;
+var name = '';
 function anmeldenclick(event){
-	var name = window.document.getElementById("name").value;
+	name = window.document.getElementById("name").value;
 	
 	if(name == ''){
 		alert("Bitte einen Benutzernamen eingeben!");
 		return;
-	}
-	
+	} 
+
 	if(readyToSend){
 		socket.send(JSON.stringify({typ:1, data:name}));
 	}
-	
+
 	document.getElementById("anzeige").innerHTML = "Warte auf weitere Spieler ...";
-	document.getElementById("anmelden").style.visibility = "hidden";
-	document.getElementById("name").style.visibility = "hidden";
-	if (ready){
-		document.getElementById("starten").setAttribute("style", "display: block");
+	document.getElementById("anmelden").setAttribute("style", "display: none");
+	document.getElementById("name").setAttribute("style", "display: none");
+	
+}
+
+function startenclick (event){
+	alert ("game start");
+	if(readyToSend){
+		socket.send(JSON.stringify({typ:3, data:"Spiel beginnt"}));
+	}
+	document.getElementById("starten").setAttribute("style", "display: none");
+	spielwurdegestartet()
+}
+
+function spielwurdegestartet(){
+	document.getElementById("quiz").setAttribute("style", "background-color: white");
+	document.getElementById("Frage").setAttribute("style", "display: block");
+	var fragen =document.getElementsByClassName("Antwort");
+	for (var i = 0; i <fragen.length; i++){
+		fragen[i].setAttribute("style", "display: inline-block");
 	}
 }
 
@@ -44,5 +60,9 @@ function spielerlistelistener(event){
         spieler=null;
     }
     ready = playerlist.toString().split(",").length>=2;
-    
+    if(playerlist[playerlist.length-1].name== name && playerlist.length>=0){
+    	document.getElementById("starten").setAttribute("style", "display: block");
+    }else{
+    	document.getElementById("starten").setAttribute("style", "display: none");
+    }
 }
