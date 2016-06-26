@@ -42,7 +42,6 @@ function spielerlistelistener(event){
         spieler.innerHTML = "   <div class=\"name\">" + playerlist[i].name + "</div><div class=\"punkte\">"+playerlist[i].score+"</div>"
         document.getElementById("User").appendChild(spieler)
         spieler=null;
-
     }
     ready = playerlist.toString().split(",").length>=2;
     

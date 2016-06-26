@@ -1,6 +1,6 @@
 
-import java.nio.CharBuffer;
-
+import java.io.IOException;
+import javax.websocket.EncodeException;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
@@ -11,9 +11,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.fhwgt.quiz.application.*;
-import de.fhwgt.quiz.loader.FilesystemLoader;
-import de.fhwgt.quiz.loader.LoaderException;
-
 
 /**
  * 
@@ -34,7 +31,7 @@ public class Websocket {
 	@OnOpen
 	public void opened(Session session){
 		System.out.print("\nSession Open! " + session);
-		//ConnectionManager.socketliste.put(session, null);
+		this.session = session;
 	}
 	
 	//Wird aufgerufen sobald ein CLient nicht mehr auf den Socket zugreift
@@ -42,7 +39,12 @@ public class Websocket {
 	@OnClose
 	public void closed(Session session){
 		System.out.print("\nSession Close: " + session);
-		//ConnectionManager.socketliste.remove(session);
+		ConnectionManager.getSocketliste().remove(this.session);
+		
+		if(spieler != null){
+			spieler.entferneSpieler();
+			spieler = null;
+		}
 	}
 	
 	//Wird aufgerufen sobald unser Server eine Nachricht erhält
@@ -63,6 +65,7 @@ public class Websocket {
 		Object data = jObject.get("data");
 		
 		switch(typ){
+		//Spieler meldet sich an
 		case 1:
 			String spielername = data.toString();
 
@@ -75,19 +78,38 @@ public class Websocket {
 			
 			try {
 				spieler = new Spieler(spielername);
+				ConnectionManager.getSocketliste().put(session, spieler);
 				System.out.print("\nSpieler " + spielername);
 			} catch (Exception e) {
 				System.out.print("\nSpieler konnte nicht angemeldet werden!");
+				break;
 			}
 
 			//Wenn Nutzer spaeter dazu kommt
 			if(Quiz.getInstance().getCurrentCatalog() != null) {
-				//sendCatalogChange();
+				sendCatalogChange();
 			}
 			break;
-		
-		//case 2:
-		// RFC ToDo
+			
+		//CatalogChange
+		case 2:
+			spieler.catalogChange((String)data);
+			sendCatalogChange();
+			break;
+			
+		//Starte Spiel
+		case 3:
+			spieler.startGame();
+			sendStartGame();
+			break;
+			
+		//QuestionRequest
+		case 4:
+			Question frage = spieler.getQuestion(this.session);
+			if(frage != null){
+				sendQuestion(frage);
+			}
+			//Letzte Frage? Spiel vorbei?
 		default:
 			System.err.print("RFC-Typ unbekannt.");
 			break;	
@@ -95,5 +117,52 @@ public class Websocket {
 		}
 	}
 	
+	public static void broadcast(JSONObject message){
+		for(Session session : ConnectionManager.getSocketliste().keySet()){
+			try {
+				session.getBasicRemote().sendObject(message);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (EncodeException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	
+	public void sendCatalogChange(){
+		JSONObject changeCatalog = new JSONObject();
+		try {
+			changeCatalog.put("typ", 2);
+			changeCatalog.put("data", Quiz.getInstance().getCurrentCatalog().getName());
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		broadcast(changeCatalog);	
+	}
+	
+	public void sendStartGame(){
+		JSONObject message = new JSONObject();
+		try {
+			message.put("typ", 3);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		broadcast(message);
+	}
+	
+	public void sendQuestion(Question question){
+		JSONObject message = new JSONObject();
+		JSONObject jquestion = new JSONObject();
+	
+		try {
+			jquestion.put("question", question.getQuestion());
+			jquestion.put("answerliste", question.getAnswerList());
+			message.put("date", jquestion.toString() + "\n\n");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		broadcast(message);
+		
+	}
 }
