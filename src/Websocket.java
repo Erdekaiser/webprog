@@ -100,6 +100,7 @@ public class Websocket {
 		case 3:
 			System.out.print("\nMessage Typ 3 angekommen: ");
 			spieler.startGame();
+			System.out.print(session);
 			sendStartGame();
 			break;
 			
@@ -129,7 +130,6 @@ public class Websocket {
 			System.out.print("\nMessage Typ 6 [QuestionAnswered] angekommen!");
 			sendQuestionResult((long) data, spieler.setAnswer((long) data));
 			break;
-			
 		//ErrorWarning	
 		case 255:
 			sendErrorWarning((String) data);
@@ -143,14 +143,9 @@ public class Websocket {
 		
 	public void broadcast(JSONObject message){
 		for(Session session : ConnectionManager.getSocketliste().keySet()){
-			try {
-				session.getBasicRemote().sendObject(message.toString());
-				System.out.print("\nBROADCAST: " + message + " an " + session + " versendet!");
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (EncodeException e) {
-				e.printStackTrace();
-			}
+			System.out.print(session);
+			session.getAsyncRemote().sendObject(message.toString());
+			System.out.print("\nBROADCAST: " + message + " an " + session + " versendet!");
 		}
 	}
 	
