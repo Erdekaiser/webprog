@@ -35,6 +35,11 @@ public class Spieler {
 		Quiz.getInstance().startGame(player, error);
 	}
 	
+	public boolean setGameOver(){
+		return Quiz.getInstance().setDone(player);
+	}
+	
+	
 	public Question getQuestion(final Session session) {
 		QuizError error = new QuizError();
 		TimerTask timeoutTask = new TimerTask() {
@@ -44,8 +49,10 @@ public class Spieler {
 				//runnable f. Timeout
 				JSONObject message = new JSONObject();
 				message.put("typ", 10);
+				System.out.print("\nMessage Typ 10 [QuestionTimout] vorbereitet: ");
 				try {
-					session.getBasicRemote().sendObject(message);
+					session.getBasicRemote().sendObject(message.toString());
+					System.out.print(message + " versendet!");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -56,12 +63,16 @@ public class Spieler {
 			}
 
 		};
-
 		Question question = Quiz.getInstance().requestQuestion(player, timeoutTask, error);
-
-		//Fehlerbehandlung
-		//checkOperationError(error);
-
+		
 		return question;
+	}
+	
+	public long setAnswer(long index){
+		QuizError error = new QuizError();
+		
+		long richtigeAntwort = Quiz.getInstance().answerQuestion(player, index, error);
+		
+		return richtigeAntwort;
 	}
 }

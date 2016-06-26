@@ -39,7 +39,7 @@ public class Websocket {
 	@OnClose
 	public void closed(Session session){
 		System.out.print("\nSession Close: " + session);
-		ConnectionManager.getSocketliste().remove(this.session);
+		ConnectionManager.SessionRemove(session);
 		
 		if(spieler != null){
 			spieler.entferneSpieler();
@@ -49,24 +49,22 @@ public class Websocket {
 	
 	//Wird aufgerufen sobald unser Server eine Nachricht erhält
 	@OnMessage	
-	public void receiveText(String message) throws JSONException{
+	public void receiveText(String message) throws JSONException, IOException, EncodeException{
 		JSONObject jObject = new JSONObject(message);
 		int typ;
 		
-		System.out.print("\nText angekommen!");
-		System.out.print("message: " + message);
-
 		typ = (int) jObject.get("typ");
 		
 		rfc(typ, jObject);
 	}
 	
-	public void rfc(int typ, JSONObject jObject) throws JSONException{
+	public void rfc(int typ, JSONObject jObject) throws JSONException, IOException, EncodeException{
 		Object data = jObject.get("data");
 		
 		switch(typ){
 		//Spieler meldet sich an
 		case 1:
+			System.out.print("\nMessage Typ 1 [Login] angekommen!");
 			String spielername = data.toString();
 
 			spielername = spielername.replaceAll("<[^>]*>", "");
@@ -78,7 +76,7 @@ public class Websocket {
 			
 			try {
 				spieler = new Spieler(spielername);
-				ConnectionManager.getSocketliste().put(session, spieler);
+				ConnectionManager.addSession(session, spieler);
 				System.out.print("\nSpieler " + spielername);
 			} catch (Exception e) {
 				System.out.print("\nSpieler konnte nicht angemeldet werden!");
@@ -93,34 +91,61 @@ public class Websocket {
 			
 		//CatalogChange
 		case 2:
+			System.out.print("\nMessage Typ 2 angekommen: ");
 			spieler.catalogChange((String)data);
 			sendCatalogChange();
 			break;
 			
 		//Starte Spiel
 		case 3:
+			System.out.print("\nMessage Typ 3 angekommen: ");
 			spieler.startGame();
 			sendStartGame();
 			break;
 			
 		//QuestionRequest
 		case 4:
+			System.out.print("\nMessage Typ 4 [QuestionRequest] angekommen!");
 			Question frage = spieler.getQuestion(this.session);
 			if(frage != null){
 				sendQuestion(frage);
+				}else{
+					if(spieler.setGameOver()){
+						JSONObject gameOver = new JSONObject();
+						gameOver.put("typ", 8);
+						session.getBasicRemote().sendObject(gameOver.toString());
+						System.out.print(gameOver + " versendet!");
+					}else{
+						JSONObject gameOverAll = new JSONObject();
+						gameOverAll.put("typ", 9);
+						broadcast(gameOverAll);
+						System.out.print(gameOverAll + " versendet!");
+					}
 			}
-			//Letzte Frage? Spiel vorbei?
+			break;
+		
+		//QuestionAnswered
+		case 6:
+			System.out.print("\nMessage Typ 6 [QuestionAnswered] angekommen!");
+			sendQuestionResult((long) data, spieler.setAnswer((long) data));
+			break;
+			
+		//ErrorWarning	
+		case 255:
+			sendErrorWarning((String) data);
+			break;
+			
 		default:
 			System.err.print("RFC-Typ unbekannt.");
-			break;	
-			
+			break;
 		}
 	}
-	
-	public static void broadcast(JSONObject message){
+		
+	public void broadcast(JSONObject message){
 		for(Session session : ConnectionManager.getSocketliste().keySet()){
 			try {
-				session.getBasicRemote().sendObject(message);
+				session.getBasicRemote().sendObject(message.toString());
+				System.out.print("\nBROADCAST: " + message + " an " + session + " versendet!");
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (EncodeException e) {
@@ -129,40 +154,76 @@ public class Websocket {
 		}
 	}
 	
-	public void sendCatalogChange(){
+	private void sendCatalogChange() throws JSONException{
 		JSONObject changeCatalog = new JSONObject();
-		try {
-			changeCatalog.put("typ", 2);
-			changeCatalog.put("data", Quiz.getInstance().getCurrentCatalog().getName());
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		broadcast(changeCatalog);	
+
+		changeCatalog.put("typ", 2);
+		changeCatalog.put("data", Quiz.getInstance().getCurrentCatalog().getName());
+		System.out.print("\nMessage Typ 2 [CatalogChange] vorbereitet: ");
+
+		broadcast(changeCatalog);
+		System.out.print(changeCatalog + " versendet!");
 	}
 	
-	public void sendStartGame(){
+	private void sendStartGame() throws JSONException{
 		JSONObject message = new JSONObject();
-		try {
-			message.put("typ", 3);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+
+		message.put("typ", 3);
+
 		broadcast(message);
+		System.out.print(message + " versendet!");
 	}
 	
-	public void sendQuestion(Question question){
+	private void sendQuestion(Question question) throws JSONException{
 		JSONObject message = new JSONObject();
 		JSONObject jquestion = new JSONObject();
-	
-		try {
-			jquestion.put("question", question.getQuestion());
-			jquestion.put("answerliste", question.getAnswerList());
-			message.put("date", jquestion.toString() + "\n\n");
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+				
+		message.put("typ", 5);
+		System.out.print("\nMessage Typ 5 [Question] vorbereitet: ");
+		jquestion.put("question", question.getQuestion());
+		jquestion.put("answerliste", question.getAnswerList());
+		message.put("data", jquestion.toString() + "\n\n");
+			
 		broadcast(message);
+		System.out.print(message + " versendet!");
+	}
+	
+	private void sendQuestionResult(long gewaehlt, long richtig) throws JSONException, IOException, EncodeException{
+		JSONObject message = new JSONObject();
+		JSONObject janswer = new JSONObject();
 		
+		message.put("typ", 7);
+		System.out.print("\nMessage Typ 7 [QuestionResult] vorbereitet: ");
+		janswer.put("selected", gewaehlt);
+		janswer.put("correct", richtig);
+		
+		message.put("data", janswer.toString() + "\n\n");
+		
+		session.getBasicRemote().sendObject(message.toString());
+		System.out.print(message + " versendet!");
+	}
+	
+	private void sendErrorWarning(String message) throws JSONException{
+		broadcast(createError(message));
+		System.out.print(message + " versendet!");
+	}
+	
+	private void sendErrorWarning(String message, Session session) throws IOException, EncodeException, JSONException{
+		session.getBasicRemote().sendObject(createError(message.toString()));
+		System.out.print(message + " versendet!");
+	}
+	
+	private JSONObject createError(String error) throws JSONException{
+		int delimiterPosition = error.indexOf(".");
+		long type = Long.parseLong(error.substring(0, delimiterPosition));
+		String message = error.substring(delimiterPosition+1, error.length());
+		
+		JSONObject jerror = new JSONObject();
+		
+		jerror.put("typ", 255);
+		jerror.put("data", message);
+		jerror.put("err", type);
+		System.out.print("\nMessage Typ 255 [ErrorWarning] vorbereitet: ");
+		return jerror;
 	}
 }
