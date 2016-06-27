@@ -152,8 +152,10 @@ public class Websocket {
 	private void sendCatalogChange() throws JSONException{
 		JSONObject changeCatalog = new JSONObject();
 
+		String Catalogname = Quiz.getInstance().getCurrentCatalog().getName();
+		
 		changeCatalog.put("typ", 2);
-		changeCatalog.put("data", Quiz.getInstance().getCurrentCatalog().getName());
+		changeCatalog.put("data", Catalogname);
 		System.out.print("\nMessage Typ 2 [CatalogChange] vorbereitet: ");
 
 		broadcast(changeCatalog);
