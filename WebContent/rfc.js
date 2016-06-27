@@ -1,4 +1,5 @@
 var name = '';
+var issuperuser= false;
 function anmeldenclick(event){
 	name = window.document.getElementById("name").value;
 	
@@ -61,8 +62,23 @@ function spielerlistelistener(event){
     }
     ready = playerlist.toString().split(",").length>=2;
     if(playerlist[playerlist.length-1].name== name && playerlist.length>=0){
+    	issuperuser= true;
     	document.getElementById("starten").setAttribute("style", "display: block");
     }else{
+    	issuperuser= false;
     	document.getElementById("starten").setAttribute("style", "display: none");
     }
+}
+
+
+function katalogLaden(event){
+	if(issuperuser){
+		if(readyToSend){
+			socket.send(JSON.stringify({typ:2, data:event.target.Id}));
+		}
+		document.getElementsByClassName("active")[0].className="Kataloge";
+		event.target.className = "Kataloge active";
+		
+	}
+		
 }

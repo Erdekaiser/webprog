@@ -7,17 +7,29 @@ function initKataloge(){
         if (request.readyState == 4 && request.status == 200) {
 
             var katalogliste = request.responseText.split(/, /);
-            var katalogname = " ";
-
+            var kataloge =document.getElementById("menubar");
+            var katalog;
             for (var i = 0; i < katalogliste.length; i++) {
-                katalogname = katalogname + '<div id="'+katalogliste[i]+'">' + katalogliste[i] + '</div>';
+            	katalog = document.createElement("div");
+            	if(i==0){
+            		katalog.className= "Kataloge active"
+            	}else{
+            		katalog.className ="Kataloge";
+            	}
+            	katalog.Id =  katalogliste[i]
+            	katalog.innerHTML=katalogliste[i];
+            	
+            	kataloge.appendChild(katalog)
+//                katalogname = katalogname + '<div class="Kataloge" id="'+katalogliste[i]+'">' + katalogliste[i] + '</div>';
+            	
             }
 
-            document.getElementById("menubar").innerHTML = katalogname;
+        	kataloge.addEventListener('click', katalogLaden, false)
+//            document.getElementById("menubar").innerHTML = katalogname;
 
-            for (var i = 0; i < katalogliste; i++) {
-                document.getElementById("menubar").getElementsByTagName("div")[i].addEventListener('click', katalogLaden, false);
-            }
+//            for (var i = 0; i < katalogliste; i++) {
+//                document.getElementById("menubar").getElementsByTagName("div")[i].addEventListener('click', katalogLaden, false);
+//            }
         }
     };
 
