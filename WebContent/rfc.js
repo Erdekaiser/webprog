@@ -84,5 +84,8 @@ function katalogLaden(event){
 }
 
 function antwortclick(event){
-	alert("Frage:"+ event.target.Id +"wurde geclicked")
+	if(readyToSend){
+		socket.send(JSON.stringify({typ:2, data:event.target.id}));
+		socket.send(JSON.stringify({typ:4, data:" "}));
+	}
 }

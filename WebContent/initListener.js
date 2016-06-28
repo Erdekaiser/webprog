@@ -10,8 +10,9 @@ function initListener(){
 	spielerliste = new EventSource("SpielerlisteServlet");
 	spielerliste.addEventListener('Spielerliste', spielerlistelistener, false);
 	
-	var fragen = document.getElementsByClassName("");
+	var fragen = document.getElementsByClassName("Antwort");
 	for (var i =0; i< fragen.length ;i++){
 		fragen[i].addEventListener('click', antwortclick, false)
 	}
+
 }
