@@ -11,7 +11,7 @@ function initKataloge(){
             var katalog;
             for (var i = 0; i < katalogliste.length; i++) {
             	katalog = document.createElement("div");
-            	if(i==0){
+	          	if(i==0){
             		katalog.className= "Kataloge active"
             	}else{
             		katalog.className ="Kataloge";

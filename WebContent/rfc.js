@@ -28,8 +28,8 @@ function startenclick (event){
 		if(readyToSend){
 			socket.send(JSON.stringify({typ:3, data:"Spiel beginnt"}));
 		}
+		//wird trotzdem noch angezeigt?
 		document.getElementById("starten").setAttribute("style", "display: none");
-		spielwurdegestartet()
 	}
 }
 
@@ -43,12 +43,48 @@ function spielwurdegestartet(){
 		fragen[i].setAttribute("style", "display: inline-block");
 	}
 	if(readyToSend){
-		socket.send(JSON.stringify({typ:4, data:" "}));
+		socket.send(JSON.stringify({typ:4, data:""}));
 	}
 }
 
-function recv(){
-	alert ("Nachricht empfangen");
+function recv(message){
+	var daten = JSON.parse(message.data);
+	console.log(daten);
+	
+	switch(daten.typ){
+	case 2:
+		//aktuellen Katalog markieren
+		updateFragenKatalog(daten.data);
+		break;
+	case 3:
+		//Spiel vorbereiten
+		spielwurdegestartet();
+		break;
+	case 5:
+		//Frage + Antwortliste ist da.
+		//Antwort (index) auf die Frage mit Typ 6 an den Server.
+		break;
+	case 7:
+		//QuestionResult
+		//Server gibt zurück ob Frage richtig beantwortet wurde.
+		break;
+	case 8:
+		//Client hat GameOver erreicht (keine Fragen mehr übrig).
+		break;
+	case 9:
+		//Alle Clients haben GameOver erreicht (keiner hat mehr fragen übrig).
+		break;
+	case 10:
+		//Timeout einer Frage wurde erreicht, neue frage anfordern.
+		//Falls keine fragen mehr da sind antwortet Server mit 8 bzw. 9.
+		console.log("Question Timeout erreicht.");
+		break;
+	case 255:
+		//Fehlermeldung kommt rein, muss angezeigt werden.
+		break;
+	default:
+		alert("Ungültiger RFC Typ!");
+	}
 }
 
 function close(){}
@@ -84,12 +120,11 @@ function spielerlistelistener(event){
 
 function katalogLaden(event){
 	if(issuperuser && !gameisrunning){
-		alert("...");
+		
 		if(readyToSend){
 			socket.send(JSON.stringify({typ:2, data:event.target.id}));
 		}
 	}
-//	updateFragenKatalog(event.target.id);
 }
 
 function antwortclick(event){
@@ -101,12 +136,26 @@ function antwortclick(event){
 	}
 }
 
-function updateFragenKatalog(id){
-	alert(id);
-	var neuerkatalog = document.getElementById(id);
-	if(neuerkatalog!=null){
-		document.getElementsByClassName("xactive")[0].className="Kataloge";
-		neuerkatalog.className = "Kataloge active";
+//Ja ich weiß, kein CSS. tooo lazy. Aber sollte so ähnlich funktionieren, musst nur noch deine CSS Klassen reinbaun.
+function updateFragenKatalog(name){
+	var auswahlElements = document.getElementById("menubar").getElementsByTagName("div");
+	var fetterCatalog	= "<b>" + name + "</b>";
+	
+	for (var i=0; i< auswahlElements.length; i++) {
+		
+		//Katalog schon fett?
+		if(fetterCatalog == auswahlElements[i].innerHTML){
+			return;
+		}
+		
+		if (name== auswahlElements[i].innerHTML) {
+			//Ausgewaehlter Katalog -> dann fett 
+			auswahlElements[i].innerHTML = fetterCatalog;
+		}
+		else {
+			//Nicht ausgewaehlter Katalog -> fett entfernen
+			auswahlElements[i].innerHTML = auswahlElements[i].innerHTML.replace(/(<b>|<\/b>)/g, "");
+		}	
 	}
 }
 

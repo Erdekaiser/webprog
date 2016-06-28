@@ -114,7 +114,7 @@ public class Websocket {
 					if(spieler.setGameOver()){
 						JSONObject gameOver = new JSONObject();
 						gameOver.put("typ", 8);
-						session.getBasicRemote().sendObject(gameOver.toString());
+						session.getBasicRemote().sendText(gameOver.toString());
 						System.out.print(gameOver + " versendet!");
 					}else{
 						JSONObject gameOverAll = new JSONObject();
@@ -144,7 +144,12 @@ public class Websocket {
 	public void broadcast(JSONObject message){
 		for(Session session : ConnectionManager.getSocketliste().keySet()){
 			System.out.print(session);
-			session.getAsyncRemote().sendObject(message.toString());
+			try {
+				session.getBasicRemote().sendText(message.toString());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			System.out.print("\nBROADCAST: " + message + " an " + session + " versendet!");
 		}
 	}
@@ -196,7 +201,7 @@ public class Websocket {
 		
 		message.put("data", janswer.toString() + "\n\n");
 		
-		session.getBasicRemote().sendObject(message.toString());
+		session.getBasicRemote().sendText(message.toString());
 		System.out.print(message + " versendet!");
 	}
 	
@@ -206,7 +211,7 @@ public class Websocket {
 	}
 	
 	private void sendErrorWarning(String message, Session session) throws IOException, EncodeException, JSONException{
-		session.getBasicRemote().sendObject(createError(message.toString()));
+		session.getBasicRemote().sendText(createError(message.toString()).toString());
 		System.out.print(message + " versendet!");
 	}
 	

@@ -51,12 +51,9 @@ public class Spieler {
 				message.put("typ", 10);
 				System.out.print("\nMessage Typ 10 [QuestionTimout] vorbereitet: ");
 				try {
-					session.getBasicRemote().sendObject(message.toString());
+					session.getBasicRemote().sendText(message.toString());
 					System.out.print(message + " versendet!");
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (EncodeException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
