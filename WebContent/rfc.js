@@ -37,7 +37,7 @@ function spielwurdegestartet(){
 }
 
 function recv(){
-	//ToDo Client RFC
+	alert ("Nachricht empfangen");
 }
 
 function close(){}
@@ -81,4 +81,8 @@ function katalogLaden(event){
 		
 	}
 		
+}
+
+function antwortclick(event){
+	alert("Frage:"+ event.target.Id +"wurde geclicked")
 }

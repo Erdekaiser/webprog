@@ -16,6 +16,8 @@ function initKataloge(){
             	}else{
             		katalog.className ="Kataloge";
             	}
+
+            	katalog.addEventListener('click', katalogLaden, false)
             	katalog.Id =  katalogliste[i]
             	katalog.innerHTML=katalogliste[i];
             	
@@ -24,7 +26,6 @@ function initKataloge(){
             	
             }
 
-        	kataloge.addEventListener('click', katalogLaden, false)
 //            document.getElementById("menubar").innerHTML = katalogname;
 
 //            for (var i = 0; i < katalogliste; i++) {
