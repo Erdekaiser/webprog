@@ -18,7 +18,7 @@ function initKataloge(){
             	}
 
             	katalog.addEventListener('click', katalogLaden, false)
-            	katalog.Id =  katalogliste[i]
+            	katalog.id =  katalogliste[i]
             	katalog.innerHTML=katalogliste[i];
             	
             	kataloge.appendChild(katalog)
