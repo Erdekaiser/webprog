@@ -28,7 +28,6 @@ function startenclick (event){
 		if(readyToSend){
 			socket.send(JSON.stringify({typ:3, data:"Spiel beginnt"}));
 		}
-		//wird trotzdem noch angezeigt?
 		document.getElementById("starten").setAttribute("style", "display: none");
 	}
 }
