@@ -24,7 +24,7 @@ function anmeldenclick(event){
 }
 
 function startenclick (event){
-	if(katalogausgewaelt =true){
+	if(katalogausgewaelt ==true){
 		if(issuperuser&&!gameisrunning){
 			if(readyToSend){
 				socket.send(JSON.stringify({typ:3, data:"Spiel beginnt"}));
@@ -32,7 +32,7 @@ function startenclick (event){
 			document.getElementById("starten").setAttribute("style", "display: none");
 		}
 	}else{
-		alert("Bitte Fragekataloge auswählen")
+		alert("Bitte Fragekataloge auswählen");
 	}
 }
 
@@ -45,7 +45,7 @@ function spielwurdegestartet(){
 	for (var i = 0; i <fragen.length; i++){
 		fragen[i].setAttribute("style", "display: inline-block");
 	}
-	neuefrageanfordern()
+	neuefrageanfordern();
 }
 
 function recv(message){
@@ -127,13 +127,14 @@ function katalogLaden(event){
 		
 		if(readyToSend){
 			socket.send(JSON.stringify({typ:2, data:event.target.id}));
+			katalogausgewaelt=true;
 		}
+		
 	}
 }
 
 function antwortclick(event){
 	if (gameisrunning){
-		katalogausgewaelt=true;
 		if(readyToSend){
 			socket.send(JSON.stringify({typ:6, data:parseInt(event.target.id)}));
 		}

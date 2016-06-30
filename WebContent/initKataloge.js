@@ -12,7 +12,7 @@ function initKataloge(){
             for (var i = 0; i < katalogliste.length; i++) {
             	katalog = document.createElement("div");
 	          	if(i==0){
-            		katalog.className= "Kataloge active"
+            		katalog.className= "Kataloge"
             	}else{
             		katalog.className ="Kataloge";
             	}
