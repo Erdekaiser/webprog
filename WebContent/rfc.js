@@ -91,6 +91,7 @@ function close(){}
 function error(){}
 
 function spielerlistelistener(event){
+	alert("Alive");
 	var playerlist = JSON.parse(event.data);
 	var playerDiv = document.getElementById("User");
 	var spieler;
@@ -119,6 +120,7 @@ function spielerlistelistener(event){
 
 
 function katalogLaden(event){
+	alert("alive");
 	if(issuperuser && !gameisrunning){
 		
 		if(readyToSend){
