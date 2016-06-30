@@ -182,7 +182,7 @@ function neueFrage(json){
 
 //	console.log(frage);
 	for(var i =0;i<4&&i<frage.length;i++){
-		document.getElementById(i).innerHTML=frage[i-1];
+		document.getElementById(i).innerHTML=frage[i];
 	}
 	
 }
