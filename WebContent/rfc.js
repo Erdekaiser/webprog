@@ -169,18 +169,17 @@ function neueFrage(json){
 	var daten = JSON.parse(json);
 	document.getElementById("Frage").innerHTML=daten["question"];
 	var frage = daten["answerliste"];
-
-//	console.log(frage);
-	for(var i =1;i<=4&&i<frage.length;i++){
-		document.getElementById(i).innerHTML=frage[i-1];
+	for(var i =0;i<4;i++){
+		document.getElementById(i).innerHTML=frage[i];
 	}
 	
 }
 
 function gameover(){
 	alert("Game over");
-	document.getElementById("Frage").innerHTML="<h2>Sie sind Fertig</h2><br>Bitte warten sie bis alle anderen FErtig sind";
-	
+	document.getElementById("Frage").innerHTML="<h2>Sie sind Fertig</h2><br>Bitte warten sie bis alle anderen Fertig sind";
+
+	document.getElementById("quiz").setAttribute("style", "background-color: lightgrey");
 	var fragen =document.getElementsByClassName("Antwort");
 
 	for (var i = 0; i <fragen.length; i++){
@@ -190,7 +189,7 @@ function gameover(){
 
 function gameoverall(){
 	alert("Alle sind fertig");
-	document.getElementById("quiz").setAttribute("style", "background-color: grey");
+	document.getElementById("quiz").setAttribute("style", "background-color: lightgrey");
 	document.getElementById("Frage").setAttribute("style", "display: none");
 	var fragen =document.getElementsByClassName("Antwort");
 
