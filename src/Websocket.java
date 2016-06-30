@@ -186,7 +186,12 @@ public class Websocket {
 		jquestion.put("answerliste", question.getAnswerList());
 		message.put("data", jquestion.toString() + "\n\n");
 			
-		broadcast(message);
+		try {
+			session.getBasicRemote().sendText(message.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.print(message + " versendet!");
 	}
 	

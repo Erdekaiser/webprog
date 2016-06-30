@@ -2,6 +2,7 @@ var name = '';
 var issuperuser= false;
 var gameisrunning = false;
 var isactiveplayer =false;
+var katalogausgewaelt= false;
 function anmeldenclick(event){
 	if (!gameisrunning){
 		name = window.document.getElementById("name").value;
@@ -23,12 +24,15 @@ function anmeldenclick(event){
 }
 
 function startenclick (event){
-
-	if(issuperuser&&!gameisrunning){
-		if(readyToSend){
-			socket.send(JSON.stringify({typ:3, data:"Spiel beginnt"}));
+	if(katalogausgewaelt =true){
+		if(issuperuser&&!gameisrunning){
+			if(readyToSend){
+				socket.send(JSON.stringify({typ:3, data:"Spiel beginnt"}));
+			}
+			document.getElementById("starten").setAttribute("style", "display: none");
 		}
-		document.getElementById("starten").setAttribute("style", "display: none");
+	}else{
+		alert("Bitte Fragekataloge auswählen")
 	}
 }
 
@@ -41,9 +45,7 @@ function spielwurdegestartet(){
 	for (var i = 0; i <fragen.length; i++){
 		fragen[i].setAttribute("style", "display: inline-block");
 	}
-	if(readyToSend){
-		socket.send(JSON.stringify({typ:4, data:""}));
-	}
+	neuefrageanfordern()
 }
 
 function recv(message){
@@ -131,6 +133,7 @@ function katalogLaden(event){
 
 function antwortclick(event){
 	if (gameisrunning){
+		katalogausgewaelt=true;
 		if(readyToSend){
 			socket.send(JSON.stringify({typ:6, data:parseInt(event.target.id)}));
 		}
@@ -234,6 +237,7 @@ function showerror (msg){
 
 function neuefrageanfordern(){
 	if(readyToSend){
+		//alert("Neue Frage");
 		socket.send(JSON.stringify({typ:4, data:" "}));
 	}
 }
