@@ -20,6 +20,10 @@ public class Spieler {
 		player = Quiz.getInstance().createPlayer(name, error);
 	}
 	
+	public long getSuperUser(){
+		return player.getId();
+	}
+	
 	public void entferneSpieler(){
 		QuizError error = new QuizError();
 		Quiz.getInstance().removePlayer(player, error);

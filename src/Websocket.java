@@ -130,6 +130,15 @@ public class Websocket {
 			System.out.print("\nMessage Typ 6 [QuestionAnswered] angekommen!");
 			sendQuestionResult(Long.parseLong( String.valueOf(data)), spieler.setAnswer(Long.parseLong( String.valueOf(data))));
 			break;
+		
+		//Superuser Request
+		case 11:
+			if(spieler.getSuperUser() == 0){
+				JSONObject superuser = new JSONObject();
+				superuser.put("typ", 11);
+				session.getBasicRemote().sendText(superuser.toString());
+			}
+			
 		//ErrorWarning	
 		case 255:
 			sendErrorWarning((String) data);
