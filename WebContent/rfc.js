@@ -1,11 +1,10 @@
-var name = '';
 var issuperuser= false;
 var gameisrunning = false;
 var isactiveplayer =false;
 var katalogausgewaelt= false;
 function anmeldenclick(event){
 	if (!gameisrunning){
-		name = window.document.getElementById("name").value;
+		var name = window.document.getElementById("name").value;
 		
 		if(name == ''){
 			alert("Bitte einen Benutzernamen eingeben!");
@@ -53,6 +52,8 @@ function recv(message){
 	console.log(daten);
 	
 	switch(daten.typ){
+	case 1:
+		i_am_a_superuser()
 	case 2:
 		//aktuellen Katalog markieren
 		updateFragenKatalog(daten.data);
@@ -84,6 +85,9 @@ function recv(message){
 		console.log("Question Timeout erreicht.");
 		neuefrageanfordern();
 		break;
+	case 11:
+		i_am_a_superuser();
+		break;
 	case 255:
 		//Fehlermeldung kommt rein, muss angezeigt werden.
 		showerror(msg);
@@ -97,6 +101,7 @@ function close(){}
 function error(){}
 
 function spielerlistelistener(event){
+
 	var playerlist = JSON.parse(event.data);
 	var playerDiv = document.getElementById("User");
 	var spieler;
@@ -116,7 +121,6 @@ function spielerlistelistener(event){
     ready = playerlist.toString().split(",").length>=2;
     
     if(!gameisrunning){
-    	issuperuser= playerlist[0].name== name;
     	showstart(playerlist.length>=2)
     }
 }
@@ -241,4 +245,14 @@ function neuefrageanfordern(){
 		//alert("Neue Frage");
 		socket.send(JSON.stringify({typ:4, data:" "}));
 	}
+}
+
+//function askforsuperuser(){
+//	if(readyToSend){
+//		socket.send(JSON.stringify({typ:11, data:" " }));
+//	}
+//}
+
+function i_am_a_superuser(){
+		issuperuser=true;
 }
