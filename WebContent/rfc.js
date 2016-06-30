@@ -181,7 +181,7 @@ function neueFrage(json){
 	var frage = daten["answerliste"];
 
 //	console.log(frage);
-	for(var i =0;i<4&&i<fragen.length;i++){
+	for(var i =0;i<4&&i<frage.length;i++){
 		document.getElementById(i).innerHTML=frage[i-1];
 	}
 	
