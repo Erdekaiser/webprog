@@ -128,7 +128,7 @@ public class Websocket {
 		//QuestionAnswered
 		case 6:
 			System.out.print("\nMessage Typ 6 [QuestionAnswered] angekommen!");
-			sendQuestionResult((long) data, spieler.setAnswer((long) data));
+			sendQuestionResult(Long.parseLong( String.valueOf(data)), spieler.setAnswer(Long.parseLong( String.valueOf(data))));
 			break;
 		//ErrorWarning	
 		case 255:

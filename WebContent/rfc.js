@@ -132,7 +132,7 @@ function katalogLaden(event){
 function antwortclick(event){
 	if (gameisrunning){
 		if(readyToSend){
-			socket.send(JSON.stringify({typ:6, data:event.target.id}));
+			socket.send(JSON.stringify({typ:6, data:parseInt(event.target.id)}));
 		}
 		neuefrageanfordern();
 	}

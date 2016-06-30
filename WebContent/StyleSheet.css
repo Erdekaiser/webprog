@@ -88,6 +88,8 @@ body {
     background-color: dodgerblue;
     color: white;
     text-align: center;
+	vertical-align: middle;
+    
 }
 .Antwort{
     position: relative;
@@ -98,6 +100,8 @@ body {
     height: 25%;
     background-color: dodgerblue;
     color: white;
+    text-align: center;
+	vertical-align: middle;
 }
 
 .button{
