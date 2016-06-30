@@ -212,7 +212,7 @@ public class Websocket {
 		janswer.put("selected", gewaehlt);
 		janswer.put("correct", richtig);
 		
-		message.put("data", janswer.toString() + "\n\n");
+		message.put("data", janswer.toString());
 		
 		session.getBasicRemote().sendText(message.toString());
 		System.out.print(message + " versendet!");

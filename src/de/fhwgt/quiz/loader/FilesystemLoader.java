@@ -132,7 +132,7 @@ public class FilesystemLoader implements CatalogLoader {
     				
     				antworten = fragen.get(i).getChildren("antwort");
     				for(int j = 0; j < antworten.size(); j++){
-    					if(fragen.get(i).getChildText("richtige_antwort") == antworten.get(j).getAttributeValue("ID")){
+    					if(fragen.get(i).getChildText("richtige_antwort").equals(antworten.get(j).getAttributeValue("ID"))){
     						question.addAnswer(antworten.get(j).getText());
     					} else {
     						question.addBogusAnswer(antworten.get(j).getText());
