@@ -162,25 +162,7 @@ function updateFragenKatalog(name){
 	
 
 	
-//	var auswahlElements = document.getElementById("menubar").getElementsByTagName("div");
-//	var fetterCatalog	= "<b>" + name + "</b>";
-//	
-//	for (var i=0; i< auswahlElements.length; i++) {
-//		
-//		//Katalog schon fett?
-//		if(fetterCatalog == auswahlElements[i].innerHTML){
-//			return;
-//		}
-//		
-//		if (name== auswahlElements[i].innerHTML) {
-//			//Ausgewaehlter Katalog -> dann fett 
-//			auswahlElements[i].innerHTML = fetterCatalog;
-//		}
-//		else {
-//			//Nicht ausgewaehlter Katalog -> fett entfernen
-//			auswahlElements[i].innerHTML = auswahlElements[i].innerHTML.replace(/(<b>|<\/b>)/g, "");
-//		}	
-//	}
+
 }
 
 function neueFrage(json){ 
@@ -189,8 +171,8 @@ function neueFrage(json){
 	var frage = daten["answerliste"];
 
 //	console.log(frage);
-	for(var i =0;i<4&&i<frage.length;i++){
-		document.getElementById(i).innerHTML=frage[i];
+	for(var i =1;i<=4&&i<frage.length;i++){
+		document.getElementById(i).innerHTML=frage[i-1];
 	}
 	
 }
@@ -242,7 +224,6 @@ function showerror (msg){
 
 function neuefrageanfordern(){
 	if(readyToSend){
-		//alert("Neue Frage");
 		socket.send(JSON.stringify({typ:4, data:" "}));
 	}
 }
