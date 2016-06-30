@@ -61,6 +61,7 @@ function recv(message){
 		break;
 	case 5:
 		//Frage + Antwortliste ist da.
+		neueFrage(daten.data)
 		//Antwort (index) auf die Frage mit Typ 6 an den Server.
 		break;
 	case 7:
@@ -69,17 +70,21 @@ function recv(message){
 		break;
 	case 8:
 		//Client hat GameOver erreicht (keine Fragen mehr übrig).
+		gameover();
 		break;
 	case 9:
 		//Alle Clients haben GameOver erreicht (keiner hat mehr fragen übrig).
+		gameoverall();
 		break;
 	case 10:
 		//Timeout einer Frage wurde erreicht, neue frage anfordern.
 		//Falls keine fragen mehr da sind antwortet Server mit 8 bzw. 9.
 		console.log("Question Timeout erreicht.");
+		neuefrageanfordern();
 		break;
 	case 255:
 		//Fehlermeldung kommt rein, muss angezeigt werden.
+		showerror(msg);
 		break;
 	default:
 		alert("Ungültiger RFC Typ!");
@@ -107,12 +112,10 @@ function spielerlistelistener(event){
         spieler=null;
     }
     ready = playerlist.toString().split(",").length>=2;
-    if(playerlist[playerlist.length-1].name== name && playerlist.length>=0){
-    	issuperuser= true;
-    	document.getElementById("starten").setAttribute("style", "display: block");
-    }else{
-    	issuperuser= false;
-    	document.getElementById("starten").setAttribute("style", "display: none");
+    
+    if(!gameisrunning){
+    	issuperuser= playerlist[0].name== name;
+    	showstart(playerlist.length>=2)
     }
 }
 
@@ -130,37 +133,107 @@ function antwortclick(event){
 	if (gameisrunning){
 		if(readyToSend){
 			socket.send(JSON.stringify({typ:6, data:event.target.id}));
-			socket.send(JSON.stringify({typ:4, data:" "}));
 		}
+		neuefrageanfordern();
 	}
 }
 
 //Ja ich weiß, kein CSS. tooo lazy. Aber sollte so ähnlich funktionieren, musst nur noch deine CSS Klassen reinbaun.
+// du nichts stümpern an meinem Programm
 function updateFragenKatalog(name){
-	var auswahlElements = document.getElementById("menubar").getElementsByTagName("div");
-	var fetterCatalog	= "<b>" + name + "</b>";
+	var active = document.getElementsByClassName("active");
+	var activeneu = document.getElementById(name);
 	
-	for (var i=0; i< auswahlElements.length; i++) {
+	if (activeneu!=null){
 		
-		//Katalog schon fett?
-		if(fetterCatalog == auswahlElements[i].innerHTML){
-			return;
+		for(var i=0;i<active.length;i++){
+			active[i].className="Kataloge";
 		}
-		
-		if (name== auswahlElements[i].innerHTML) {
-			//Ausgewaehlter Katalog -> dann fett 
-			auswahlElements[i].innerHTML = fetterCatalog;
-		}
-		else {
-			//Nicht ausgewaehlter Katalog -> fett entfernen
-			auswahlElements[i].innerHTML = auswahlElements[i].innerHTML.replace(/(<b>|<\/b>)/g, "");
-		}	
+		activeneu.className="Kataloge active";
 	}
+	
+
+	
+//	var auswahlElements = document.getElementById("menubar").getElementsByTagName("div");
+//	var fetterCatalog	= "<b>" + name + "</b>";
+//	
+//	for (var i=0; i< auswahlElements.length; i++) {
+//		
+//		//Katalog schon fett?
+//		if(fetterCatalog == auswahlElements[i].innerHTML){
+//			return;
+//		}
+//		
+//		if (name== auswahlElements[i].innerHTML) {
+//			//Ausgewaehlter Katalog -> dann fett 
+//			auswahlElements[i].innerHTML = fetterCatalog;
+//		}
+//		else {
+//			//Nicht ausgewaehlter Katalog -> fett entfernen
+//			auswahlElements[i].innerHTML = auswahlElements[i].innerHTML.replace(/(<b>|<\/b>)/g, "");
+//		}	
+//	}
 }
 
 function neueFrage(json){ 
-	var daten = JSON.parse(message.data);
-	document.getElementById("Frage").innerHTML= daten.question;
-	//document.
+	var daten = JSON.parse(json);
+	document.getElementById("Frage").innerHTML=daten["question"];
+	var frage = daten["answerliste"];
+
+//	console.log(frage);
+	for(var i =0;i<4&&i<fragen.length;i++){
+		document.getElementById(i).innerHTML=frage[i-1];
+	}
 	
+}
+
+function gameover(){
+	alert("Game over");
+	document.getElementById("Frage").innerHTML="<h2>Sie sind Fertig</h2><br>Bitte warten sie bis alle anderen FErtig sind";
+	
+	var fragen =document.getElementsByClassName("Antwort");
+
+	for (var i = 0; i <fragen.length; i++){
+		fragen[i].setAttribute("style", "display: none");
+	}
+}
+
+function gameoverall(){
+	alert("Alle sind fertig");
+	document.getElementById("quiz").setAttribute("style", "background-color: grey");
+	document.getElementById("Frage").setAttribute("style", "display: none");
+	var fragen =document.getElementsByClassName("Antwort");
+
+	for (var i = 0; i <fragen.length; i++){
+		fragen[i].setAttribute("style", "display: none");
+	}
+
+	gameisrunning = false;
+	showstart(true);
+}
+
+function showstart(ja){
+	
+	if(ja && issuperuser == true &&gameisrunning==false){
+    	document.getElementById("starten").setAttribute("style", "display: block");
+    }else if (!ja){
+    	document.getElementById("starten").setAttribute("style", "display: none");
+    }
+}
+
+function showerror (msg){
+	alert("Es ist ein schwerwiegender Fehler aufgetreten");
+	document.getElementById("Frage").innerHTML="<h2>Error</h2>"+msg;
+	
+	var fragen =document.getElementsByClassName("Antwort");
+
+	for (var i = 0; i <fragen.length; i++){
+		fragen[i].setAttribute("style", "display: none");
+	}
+}
+
+function neuefrageanfordern(){
+	if(readyToSend){
+		socket.send(JSON.stringify({typ:4, data:" "}));
+	}
 }
