@@ -11,7 +11,7 @@ public class ConnectionManager
 	public static ConcurrentHashMap<Session, Spieler> getSocketliste(){
 		return socketliste;
 	}
-	    
+	
     //Verbindung hinzufügen
     public  static synchronized void addSession(Session session, Spieler spieler) {
     	socketliste.put(session, spieler);

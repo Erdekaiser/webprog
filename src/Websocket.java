@@ -123,7 +123,8 @@ public class Websocket {
 						gameOver.put("typ", 8);
 						session.getBasicRemote().sendText(gameOver.toString());
 						System.out.print(gameOver + " versendet!");
-					}else{
+					}
+					if(checkAllPlayersDone()){
 						JSONObject gameOverAll = new JSONObject();
 						gameOverAll.put("typ", 9);
 						broadcast(gameOverAll);
@@ -240,5 +241,20 @@ public class Websocket {
 		jerror.put("err", type);
 		System.out.print("\nMessage Typ 255 [ErrorWarning] vorbereitet: ");
 		return jerror;
+	}
+	
+	private boolean checkAllPlayersDone()
+	{
+		int spielerDone = 0;
+		for(Session session : ConnectionManager.getSocketliste().keySet()){
+			if(ConnectionManager.getSocketliste().get(session).setGameOver()){
+				spielerDone++;
+			}	
+		}
+		if(spielerDone == 4){
+			return true;
+		}else{
+			return false;
+		}
 	}
 }
