@@ -77,7 +77,14 @@ public class Websocket {
 			try {
 				spieler = new Spieler(spielername);
 				ConnectionManager.addSession(session, spieler);
+				
 				System.out.print("\nSpieler " + spielername);
+				
+				if(spieler.getSuperUser() == 0){
+					JSONObject superuser = new JSONObject();
+					superuser.put("typ", 1);
+					session.getBasicRemote().sendText(superuser.toString());
+				}
 			} catch (Exception e) {
 				System.out.print("\nSpieler konnte nicht angemeldet werden!");
 				break;
@@ -130,14 +137,6 @@ public class Websocket {
 			System.out.print("\nMessage Typ 6 [QuestionAnswered] angekommen!");
 			sendQuestionResult(Long.parseLong( String.valueOf(data)), spieler.setAnswer(Long.parseLong( String.valueOf(data))));
 			break;
-		
-		//Superuser Request
-		case 11:
-			if(spieler.getSuperUser() == 0){
-				JSONObject superuser = new JSONObject();
-				superuser.put("typ", 11);
-				session.getBasicRemote().sendText(superuser.toString());
-			}
 			
 		//ErrorWarning	
 		case 255:
