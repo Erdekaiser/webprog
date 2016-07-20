@@ -14,5 +14,4 @@ function initListener(){
 	for (var i =0; i< fragen.length ;i++){
 		fragen[i].addEventListener('click', antwortclick, false)
 	}
-
 }

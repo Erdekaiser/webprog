@@ -106,30 +106,35 @@ public class Websocket {
 		//Starte Spiel
 		case 3:
 			System.out.print("\nMessage Typ 3 angekommen: ");
+			if(checkAllPlayersDone()){
+				spieler.setGameOver();
+			}
 			spieler.startGame();
-			System.out.print(session);
 			sendStartGame();
 			break;
 			
 		//QuestionRequest
 		case 4:
 			System.out.print("\nMessage Typ 4 [QuestionRequest] angekommen!");
+			System.out.print("Name: " + spieler.getName() + " Status: " + spieler.getDone() + "\n");
 			Question frage = spieler.getQuestion(this.session);
 			if(frage != null){
 				sendQuestion(frage);
-				}else{
-					if(spieler.setGameOver()){
-						JSONObject gameOver = new JSONObject();
-						gameOver.put("typ", 8);
-						session.getBasicRemote().sendText(gameOver.toString());
-						System.out.print(gameOver + " versendet!");
-					}
-					if(checkAllPlayersDone()){
-						JSONObject gameOverAll = new JSONObject();
-						gameOverAll.put("typ", 9);
-						broadcast(gameOverAll);
-						System.out.print(gameOverAll + " versendet!");
-					}
+			}else{
+				if(spieler.getDone()){
+					JSONObject gameOver = new JSONObject();
+					gameOver.put("typ", 8);
+					session.getBasicRemote().sendText(gameOver.toString());
+					spieler.setGameOver();
+					System.out.print(gameOver + " versendet!");
+				}
+				
+				if(checkAllPlayersDone()){
+					JSONObject gameOverAll = new JSONObject();
+					gameOverAll.put("typ", 9);
+					broadcast(gameOverAll);
+					System.out.print(gameOverAll + " versendet!");
+				}
 			}
 			break;
 		
@@ -156,7 +161,6 @@ public class Websocket {
 			try {
 				session.getBasicRemote().sendText(message.toString());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			System.out.print("\nBROADCAST: " + message + " an " + session + " versendet!");
@@ -198,7 +202,6 @@ public class Websocket {
 		try {
 			session.getBasicRemote().sendText(message.toString());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.print(message + " versendet!");
@@ -247,11 +250,16 @@ public class Websocket {
 	{
 		int spielerDone = 0;
 		for(Session session : ConnectionManager.getSocketliste().keySet()){
-			if(ConnectionManager.getSocketliste().get(session).setGameOver()){
+			if(ConnectionManager.getSocketliste().get(session).getDone()){
+				System.out.print("\nName: " + 
+						ConnectionManager.getSocketliste().get(session).getName()
+						+ " GameState: "
+						+ ConnectionManager.getSocketliste().get(session).getDone()
+				);
 				spielerDone++;
 			}	
 		}
-		if(spielerDone == 4){
+		if(spielerDone == ConnectionManager.getSocketliste().size()){
 			return true;
 		}else{
 			return false;

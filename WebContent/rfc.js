@@ -2,6 +2,7 @@ var issuperuser= false;
 var gameisrunning = false;
 var isactiveplayer =false;
 var katalogausgewaelt= false;
+
 function anmeldenclick(event){
 	if (!gameisrunning){
 		var name = window.document.getElementById("name").value;
@@ -23,6 +24,8 @@ function anmeldenclick(event){
 }
 
 function startenclick (event){
+	
+	
 	if(katalogausgewaelt ==true){
 		if(issuperuser&&!gameisrunning){
 			if(readyToSend){
@@ -146,8 +149,6 @@ function antwortclick(event){
 	}
 }
 
-//Ja ich weiß, kein CSS. tooo lazy. Aber sollte so ähnlich funktionieren, musst nur noch deine CSS Klassen reinbaun.
-// du nichts stümpern an meinem Programm
 function updateFragenKatalog(name){
 	var active = document.getElementsByClassName("active");
 	var activeneu = document.getElementById(name);
@@ -159,10 +160,6 @@ function updateFragenKatalog(name){
 		}
 		activeneu.className="Kataloge active";
 	}
-	
-
-	
-
 }
 
 function neueFrage(json){ 
@@ -176,7 +173,7 @@ function neueFrage(json){
 }
 
 function gameover(){
-	alert("Game over");
+	//alert("Game over");
 	document.getElementById("Frage").innerHTML="<h2>Sie sind Fertig</h2><br>Bitte warten sie bis alle anderen Fertig sind";
 
 	document.getElementById("quiz").setAttribute("style", "background-color: lightgrey");
@@ -188,7 +185,7 @@ function gameover(){
 }
 
 function gameoverall(){
-	alert("Alle sind fertig");
+	//alert("Alle sind fertig");
 	document.getElementById("quiz").setAttribute("style", "background-color: lightgrey");
 	document.getElementById("Frage").setAttribute("style", "display: none");
 	var fragen =document.getElementsByClassName("Antwort");
@@ -199,6 +196,8 @@ function gameoverall(){
 
 	gameisrunning = false;
 	showstart(true);
+	//ggf. Spielende Nachricht anzeigen lassen + neuen Button der das Fenster neu lädt:
+	//window.location.reload();
 }
 
 function showstart(ja){

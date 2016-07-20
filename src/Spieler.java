@@ -20,6 +20,14 @@ public class Spieler {
 		player = Quiz.getInstance().createPlayer(name, error);
 	}
 	
+	public String getName(){
+		return player.getName();
+	}
+	
+	public boolean getDone(){
+		return player.isDone();
+	}
+	
 	public long getSuperUser(){
 		return player.getId();
 	}
