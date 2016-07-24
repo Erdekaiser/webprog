@@ -5,7 +5,9 @@ function initListener(){
 	var starten = document.getElementById("starten");
 	starten.addEventListener('click', startenclick, false);
 	
-	
+
+	var starten = document.getElementById("neuesspiel");
+	starten.addEventListener('click', nsclick, false);
 	
 	spielerliste = new EventSource("SpielerlisteServlet");
 	spielerliste.addEventListener('Spielerliste', spielerlistelistener, false);

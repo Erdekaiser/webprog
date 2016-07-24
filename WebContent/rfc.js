@@ -38,6 +38,10 @@ function startenclick (event){
 	}
 }
 
+function nsclick(){
+	location.reload(true);
+}
+
 function spielwurdegestartet(){
 	document.getElementById("quiz").setAttribute("style", "background-color: white");
 	document.getElementById("Frage").setAttribute("style", "display: block");
@@ -188,6 +192,7 @@ function gameoverall(){
 	//alert("Alle sind fertig");
 	document.getElementById("quiz").setAttribute("style", "background-color: lightgrey");
 	document.getElementById("Frage").setAttribute("style", "display: none");
+	document.getElementById("neuesspiel").setAttribute("style", "display: block");
 	var fragen =document.getElementsByClassName("Antwort");
 
 	for (var i = 0; i <fragen.length; i++){
