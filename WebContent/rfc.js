@@ -191,7 +191,7 @@ function gameover(){
 function gameoverall(){
 	//alert("Alle sind fertig");
 	document.getElementById("quiz").setAttribute("style", "background-color: lightgrey");
-	document.getElementById("Frage").setAttribute("style", "display: none");
+	document.getElementById("Frage").innerHTML="<h2>Alle Spieler sind Fertig</h2><br>Bitte wählen Sie \"Neues Spiel\" aus um eine neue Runde zu starten.";
 	document.getElementById("neuesspiel").setAttribute("style", "display: block");
 	var fragen =document.getElementsByClassName("Antwort");
 

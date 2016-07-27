@@ -4,7 +4,7 @@ function initWebSocket()
 {
 	var url = "ws://localhost:8085/Quiz/Socket";
 	
-	alert("url: "+url);
+	//alert("url: "+url);
 	socket=new WebSocket(url);
 	
 	socket.onopen=rdytosend;
