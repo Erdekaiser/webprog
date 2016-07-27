@@ -199,8 +199,8 @@ function gameoverall(){
 		fragen[i].setAttribute("style", "display: none");
 	}
 
-	gameisrunning = false;
-	showstart(true);
+	//gameisrunning = false;
+	//showstart(true);
 	//ggf. Spielende Nachricht anzeigen lassen + neuen Button der das Fenster neu lädt:
 	//window.location.reload();
 }

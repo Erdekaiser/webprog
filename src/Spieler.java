@@ -57,8 +57,10 @@ public class Spieler {
 		TimerTask timeoutTask = new TimerTask() {
 
 			@SuppressWarnings("unchecked")
+			//runnable f. Timeout
 			public void run() {
-				//runnable f. Timeout
+				//Frage in d. Logik als nicht beantwortet markieren.
+				Quiz.getInstance().answerQuestion(player, -1, error);
 				JSONObject message = new JSONObject();
 				message.put("typ", 10);
 				System.out.print("\nMessage Typ 10 [QuestionTimout] vorbereitet: ");

@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE fragenkatalog SYSTEM "fragen.dtd">
 	<fragenkatalog name="systemprogrammierung">
 		<anzahl_fragen>12</anzahl_fragen>
 		<frage ID="1">
 			<timeout>30</timeout>
 			<richtige_antwort>1</richtige_antwort>
-			<fragestellung>Ein Thread soll auf ein durch einen anderen Thread ausgel�stes Ereignis warten. Welcher Mechanismus ist geeignet?</fragestellung>
+			<fragestellung>Ein Thread soll auf ein durch einen anderen Thread ausgelöstes Ereignis warten. Welcher Mechanismus ist geeignet?</fragestellung>
 			<antwort ID="1">nur Semaphore</antwort>
 			<antwort ID="2">nur Mutex</antwort>
 			<antwort ID="3">weder Semaphore noch Mutexe</antwort>
@@ -15,35 +15,35 @@
 			<timeout>20</timeout>
 			<richtige_antwort>1</richtige_antwort>
 			<fragestellung>Der Systemaufruf fork...</fragestellung>
-			<antwort ID="1">...erzeugt einen neuen Prozess, der das gleiche Programm ausf�hrt.</antwort>
-			<antwort ID="2">...erzeugt einen neuen Prozess, der ein anderes Programm ausf�hrt.</antwort>
+			<antwort ID="1">...erzeugt einen neuen Prozess, der das gleiche Programm ausführt.</antwort>
+			<antwort ID="2">...erzeugt einen neuen Prozess, der ein anderes Programm ausführt.</antwort>
 			<antwort ID="3">...erzeugt einen neuen Thread.</antwort>
-			<antwort ID="4">...ist das logische Gegenst�ck zum Aufruf knife.</antwort>
+			<antwort ID="4">...ist das logische Gegenstück zum Aufruf knife.</antwort>
 		</frage>
 		<frage ID="3">
 			<timeout>30</timeout>
 			<richtige_antwort>1</richtige_antwort>
 			<fragestellung>In einem Signalhandler...</fragestellung>
-			<antwort ID="1">...d�rfen nur bestimmte Funktionen aufgerufen werden.</antwort>
-			<antwort ID="2">...kann man problemlos alles machen, was man auch im regul�ren Programmcode macht.</antwort>
-			<antwort ID="3">...d�rfen keine Flie�kommaoperationen durchgef�hrt werden.</antwort>
+			<antwort ID="1">...dürfen nur bestimmte Funktionen aufgerufen werden.</antwort>
+			<antwort ID="2">...kann man problemlos alles machen, was man auch im regulären Programmcode macht.</antwort>
+			<antwort ID="3">...dürfen keine Fließkommaoperationen durchgeführt werden.</antwort>
 			<antwort ID="4">...ist nur der Systemaufruf write verboten.</antwort>
 		</frage>
 		<frage ID="4">
 			<timeout>30</timeout>
 			<richtige_antwort>1</richtige_antwort>
-			<fragestellung>Sie m�chten eine Datenstruktur vor gleichzeitigem Zugriff aus mehreren Threads sch�tzen. Welcher Mechanismus ist daf�r geeignet?</fragestellung>
+			<fragestellung>Sie möchten eine Datenstruktur vor gleichzeitigem Zugriff aus mehreren Threads schützen. Welcher Mechanismus ist dafür geeignet?</fragestellung>
 			<antwort ID="1">Sowohl Semaphore als auch Mutexe.</antwort>
 			<antwort ID="2">Mutexe</antwort>
 			<antwort ID="3">Semaphore</antwort>
-			<antwort ID="4">Verschl�sselung</antwort>
+			<antwort ID="4">Verschlüsselung</antwort>
 		</frage>
 		<frage ID="5">
 			<timeout>30</timeout>
 			<richtige_antwort>1</richtige_antwort>
 			<fragestellung>Es soll darauf gewartet werden, dass Daten eintreffen, allerdings nur eine bestimmte Zeit. Wie kann man das umsetzen?</fragestellung>
 			<antwort ID="1">mit dem Systemaufruf select</antwort>
-			<antwort ID="2">durch einen zus�tzlichen Timeout-Parameter bei read oder recv</antwort>
+			<antwort ID="2">durch einen zusätzlichen Timeout-Parameter bei read oder recv</antwort>
 			<antwort ID="3">gar nicht</antwort>
 			<antwort ID="4">durch Setzen des Timeout-Status mit fcntl</antwort>
 		</frage>
@@ -59,29 +59,29 @@
 		<frage ID="7">
 			<timeout>45</timeout>
 			<richtige_antwort>1</richtige_antwort>
-			<fragestellung>W�hrend eines read-Aufrufs tritt ein Signal auf und wird durch einen Signalhandler abgearbeitet (SA_RESTART nicht gesetzt). Was passiert?</fragestellung>
-			<antwort ID="1">Der Aufruf kehrt unter Umst�nden mit weniger Daten als angefordert oder EINTR zur�ck.</antwort>
+			<fragestellung>Während eines read-Aufrufs tritt ein Signal auf und wird durch einen Signalhandler abgearbeitet (SA_RESTART nicht gesetzt). Was passiert?</fragestellung>
+			<antwort ID="1">Der Aufruf kehrt unter Umständen mit weniger Daten als angefordert oder EINTR zurück.</antwort>
 			<antwort ID="2">Es werden auf jeden Fall so viele Daten gelesen wie angefordert.</antwort>
 			<antwort ID="3">Die Daten gehen verloren.</antwort>
-			<antwort ID="4">Das Programm wird in solchen F�llen vom Betriebssystem abgebrochen.</antwort>
+			<antwort ID="4">Das Programm wird in solchen Fällen vom Betriebssystem abgebrochen.</antwort>
 		</frage>
 		<frage ID="8">
 			<timeout>20</timeout>
 			<richtige_antwort>1</richtige_antwort>
 			<fragestellung>Beim Lesen aus einer Pipe meldet der Aufruf read das Dateiende, wenn...</fragestellung>
-			<antwort ID="1">...alle Schreib-Deskriptoren f�r die Pipe geschlossen und alle Daten aus der Pipe gelesen wurden.</antwort>
-			<antwort ID="2">...der Leser ein spezielles Signal erh�lt.</antwort>
+			<antwort ID="1">...alle Schreib-Deskriptoren für die Pipe geschlossen und alle Daten aus der Pipe gelesen wurden.</antwort>
+			<antwort ID="2">...der Leser ein spezielles Signal erhält.</antwort>
 			<antwort ID="3">...der schreibende Prozess fork aufruft.</antwort>
 			<antwort ID="4">...^D in die Pipe geschrieben wird.</antwort>
 		</frage>
 		<frage ID="9">
 			<timeout>30</timeout>
 			<richtige_antwort>1</richtige_antwort>
-			<fragestellung>Was passiert mit einem Shared-Memory-Objekt, wenn es nicht manuell gel�scht wird?</fragestellung>
-			<antwort ID="1">Es bleibt weiterhin bestehen, bis es von Hand oder durch einen Reboot gel�scht wurde.</antwort>
-			<antwort ID="2">Es wird zerst�rt, wenn sich der Prozess beendet, der es erzeugt hat.</antwort>
-			<antwort ID="3">Es wird zerst�rt, wenn kein Prozess mehr auf es zugreift.</antwort>
-			<antwort ID="4">Der Garbage-Collector des Betriebssystems zerst�rt es, wenn der Speicher knapp wird.</antwort>
+			<fragestellung>Was passiert mit einem Shared-Memory-Objekt, wenn es nicht manuell gelöscht wird?</fragestellung>
+			<antwort ID="1">Es bleibt weiterhin bestehen, bis es von Hand oder durch einen Reboot gelöscht wurde.</antwort>
+			<antwort ID="2">Es wird zerstört, wenn sich der Prozess beendet, der es erzeugt hat.</antwort>
+			<antwort ID="3">Es wird zerstört, wenn kein Prozess mehr auf es zugreift.</antwort>
+			<antwort ID="4">Der Garbage-Collector des Betriebssystems zerstört es, wenn der Speicher knapp wird.</antwort>
 		</frage>
 		<frage ID="10">
 			<timeout>30</timeout>
@@ -104,7 +104,7 @@
 		<frage ID="12">
 			<timeout>30</timeout>
 			<richtige_antwort>1</richtige_antwort>
-			<fragestellung>Welches Signal (sofern nicht ignoriert) empf�ngt ein Elternprozess, wenn sich einer seiner Kindprozesse beendet?</fragestellung>
+			<fragestellung>Welches Signal (sofern nicht ignoriert) empfängt ein Elternprozess, wenn sich einer seiner Kindprozesse beendet?</fragestellung>
 			<antwort ID="1">SIGCHLD</antwort>
 			<antwort ID="2">SIGSYS</antwort>
 			<antwort ID="3">SIGSEGV</antwort>

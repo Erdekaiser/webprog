@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.fhwgt.quiz.application.*;
+import de.fhwgt.quiz.error.QuizError;
 
 /**
  * 
@@ -37,13 +38,21 @@ public class Websocket {
 	//Wird aufgerufen sobald ein CLient nicht mehr auf den Socket zugreift
 	//Wir erhalten die Session vom Client und löschen sie aus unserem sessions set
 	@OnClose
-	public void closed(Session session){
+	public void closed(Session session) throws JSONException{
 		System.out.print("\nSession Close: " + session);
-		ConnectionManager.SessionRemove(session);
 		
+		ConnectionManager.SessionRemove(session);
 		if(spieler != null){
 			spieler.entferneSpieler();
 			spieler = null;
+		}
+		session = null;
+		
+		if(Quiz.getInstance().getPlayerList().size() < 2){
+			JSONObject gameOverAll = new JSONObject();
+			gameOverAll.put("typ", 9);
+			broadcast(gameOverAll);
+			System.out.print(gameOverAll + " versendet!");
 		}
 	}
 	
@@ -116,7 +125,6 @@ public class Websocket {
 		//QuestionRequest
 		case 4:
 			System.out.print("\nMessage Typ 4 [QuestionRequest] angekommen!");
-			System.out.print("Name: " + spieler.getName() + " Status: " + spieler.getDone() + "\n");
 			Question frage = spieler.getQuestion(this.session);
 			if(frage != null){
 				sendQuestion(frage);
