@@ -2,6 +2,8 @@ var issuperuser= false;
 var gameisrunning = false;
 var isactiveplayer =false;
 var katalogausgewaelt= false;
+var topSpieler;
+var topPunkte = 0;
 
 //Funktion für den Anmelden Button
 function anmeldenclick(event){
@@ -118,6 +120,8 @@ function spielerlistelistener(event){
 	var playerlist = JSON.parse(event.data);
 	var playerDiv = document.getElementById("User");
 	var spieler;
+	//var topSpieler;
+	//var topPunkte;
 	
 	if (playerlist.toString() == ""){
 		return;
@@ -129,6 +133,10 @@ function spielerlistelistener(event){
         spieler.className = "spieler"
         spieler.innerHTML = "   <div class=\"name\">" + playerlist[i].name + "</div><div class=\"punkte\">"+playerlist[i].score+"</div>"
         document.getElementById("User").appendChild(spieler)
+        if(playerlist[i].score > topPunkte){
+        	topPunkte = playerlist[i].score;
+        	topSpieler = playerlist[i].name;
+        }
         spieler=null;
     }
     ready = playerlist.toString().split(",").length>=2;
@@ -197,7 +205,10 @@ function gameover(){
 function gameoverall(){
 	//alert("Alle sind fertig");
 	document.getElementById("quiz").setAttribute("style", "background-color: lightgrey");
-	document.getElementById("Frage").innerHTML="<h2>Alle Spieler sind Fertig</h2><br>Bitte wählen Sie \"Neues Spiel\" aus um eine neue Runde zu starten.";
+	document.getElementById("Frage").innerHTML="<h2>Alle Spieler sind Fertig</h2>" +
+			"<br>Gewinner: " + topSpieler +
+			"<br>Punkte: " + topPunkte +
+			"<br><br>Bitte wählen Sie \"Neues Spiel\" aus um eine neue Runde zu starten.";
 	document.getElementById("neuesspiel").setAttribute("style", "display: block");
 	var fragen =document.getElementsByClassName("Antwort");
 
