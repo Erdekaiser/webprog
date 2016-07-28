@@ -3,6 +3,7 @@ var gameisrunning = false;
 var isactiveplayer =false;
 var katalogausgewaelt= false;
 
+//Funktion für den Anmelden Button
 function anmeldenclick(event){
 	if (!gameisrunning){
 		var name = window.document.getElementById("name").value;
@@ -23,10 +24,10 @@ function anmeldenclick(event){
 	}
 }
 
+//Funktion für den Starten Button
 function startenclick (event){
 	
-	
-	if(katalogausgewaelt ==true){
+	if(katalogausgewaelt == true){
 		if(issuperuser&&!gameisrunning){
 			if(readyToSend){
 				socket.send(JSON.stringify({typ:3, data:"Spiel beginnt"}));
@@ -38,10 +39,12 @@ function startenclick (event){
 	}
 }
 
+//Funktion für den New Game Button
 function nsclick(){
 	location.reload(true);
 }
 
+//Funktion nac
 function spielwurdegestartet(){
 	document.getElementById("quiz").setAttribute("style", "background-color: white");
 	document.getElementById("Frage").setAttribute("style", "display: block");
@@ -77,6 +80,7 @@ function recv(message){
 	case 7:
 		//QuestionResult
 		//Server gibt zurück ob Frage richtig beantwortet wurde.
+		showCorrectAnswer(daten.data);
 		break;
 	case 8:
 		//Client hat GameOver erreicht (keine Fragen mehr übrig).
@@ -104,9 +108,11 @@ function recv(message){
 	}
 }
 
+//Ungenutzt. Für Socket close/error
 function close(){}
 function error(){}
 
+//Funktion für EventListener (SSE) der Spielerliste
 function spielerlistelistener(event){
 
 	var playerlist = JSON.parse(event.data);
@@ -149,7 +155,7 @@ function antwortclick(event){
 		if(readyToSend){
 			socket.send(JSON.stringify({typ:6, data:parseInt(event.target.id)}));
 		}
-		neuefrageanfordern();
+		//setTimeout(neuefrageanfordern(), 1000);
 	}
 }
 
@@ -226,17 +232,46 @@ function showerror (msg){
 }
 
 function neuefrageanfordern(){
+	
+	
 	if(readyToSend){
 		socket.send(JSON.stringify({typ:4, data:" "}));
 	}
+	
+	for(var i = 0; i < 4; i++){
+		document.getElementById(i).style.backgroundColor = "dodgerblue";
+	}
 }
-
-//function askforsuperuser(){
-//	if(readyToSend){
-//		socket.send(JSON.stringify({typ:11, data:" " }));
-//	}
-//}
 
 function i_am_a_superuser(){
 		issuperuser=true;
+}
+
+function showCorrectAnswer(json){
+	var antwort = JSON.parse(json);
+	
+	if(antwort.selected == antwort.correct){
+		document.getElementById(antwort.selected).style.backgroundColor = "green";
+	} else {
+		document.getElementById(antwort.selected).style.backgroundColor = "red"
+		document.getElementById(antwort.correct).style.backgroundColor = "green";
+	}
+	
+	var fragen = document.getElementsByClassName("Antwort");
+	for (var i =0; i< fragen.length ;i++){
+		fragen[i].removeEventListener('click', antwortclick, false)
+	}
+	startTimer();
+}
+
+function startTimer () {
+    setTimeout(stopTimer,3000);
+}
+
+function stopTimer () {
+	neuefrageanfordern();
+	var fragen = document.getElementsByClassName("Antwort");
+	for (var i =0; i< fragen.length ;i++){
+		fragen[i].addEventListener('click', antwortclick, false)
+	}
 }
